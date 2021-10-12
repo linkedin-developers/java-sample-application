@@ -16,45 +16,57 @@ import org.springframework.web.client.RestTemplate;
 public class MainController {
 
 	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+	public RestTemplate restTemplate(RestTemplateBuilder builder) 
+	{
 		return builder.build();
 	}
 
 	@Autowired
 	private RestTemplate restTemplate;
-	private String serverurl = "http://127.0.0.1:5000/";
-	private String callapi_endpoint = "";
+	private String server_URL = "http://127.0.0.1:5000/";
 	private String action = "";
 
+
+    /**
+     * Serves a html webpage with operations related to OAuth
+     **/
+
 	@GetMapping("/")
-	public String oauth(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model)
+	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model)
 	{
-		action = "Please Click login with linkedin Button to genrate access token!";
-		String auth_url = serverurl + "login";
-		model.addAttribute("auth_url", auth_url);
+		action = "Please Click login with linkedIn Button to generate access token!";
+		String auth_URL = server_URL + "login";
+		model.addAttribute("auth_url", auth_URL );
 		model.addAttribute("output", "response");
 		model.addAttribute("action", action);
 		return "oauthli";
 	}
 
-	@PostMapping(path="/", produces = {"application/json", "application/xml"},  consumes = {"application/x-www-form-urlencoded"})
-	public String postBody(@RequestBody String postarray, Model model) {
+	/**
+     * Handles the post requests of Html page, calls the API endpoints of server URL
+	 * to return a response and updates it on UI
+     **/
+
+	@PostMapping(path = "/", produces = {"application/json", "application/xml"},  consumes = {"application/x-www-form-urlencoded"})
+	public String postBody(@RequestBody String post_Array, Model model) 
+	{
 		String response = "";
 
-				 if(postarray == "profile=Get+Profile")
-				 {
-					  response = restTemplate.getForObject(serverurl + "profile", String.class);
-				 }else if(postarray == "refresh_token=Refresh+Token"){
-					  response = restTemplate.getForObject(serverurl + "refresh_token", String.class);
-				 }
-				 else
-				 {
-				 		//token_Introspection=Token+Introspection
-					 	response = restTemplate.getForObject(serverurl + "token_Introspection", String.class);
-				 	}
+				if(post_Array == "profile=Get+Profile")
+				{
+					response = restTemplate.getForObject(server_URL + "profile", String.class);
+
+				}else if(post_Array == "refresh_token=Refresh+Token")
+				{
+					response = restTemplate.getForObject(server_URL + "refresh_token", String.class);
+				}
+				else //token_Introspection=Token+Introspection
+				{
+				 	response = restTemplate.getForObject(server_URL + "token_Introspection", String.class);
+				}
 
 		model.addAttribute("output", response);
-		model.addAttribute("action", postarray);
+		model.addAttribute("action", post_Array);
 		return "oauthli";
 	}
 
