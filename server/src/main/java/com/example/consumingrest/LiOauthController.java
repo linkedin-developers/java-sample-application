@@ -25,7 +25,6 @@ import static com.linkedin.oauth.util.Constants.*;
 
 @RestController
 public class LiOauthController {
-  //private LiOauthController() { }
 
   @Bean
   public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -42,10 +41,12 @@ public class LiOauthController {
   public String refresh_token = null;
   public LinkedInOAuthService service;
 
-
+  /*
+  * Make a Login request with LinkedIN Oauth API
+  */
 
   @RequestMapping(value = "/login")
-  public String oauth(@RequestParam(name="code", required=false) String code, HttpSession session) throws Exception {
+  public String oauth(@RequestParam(name = "code", required = false) String code, HttpSession session) throws Exception {
 
     InputStream inputStream = LiOauthController.class.getClassLoader().getResourceAsStream(propFileName);
     if (inputStream != null) {
@@ -92,6 +93,10 @@ public class LiOauthController {
 
   }
 
+  /*
+  * Make a Token Introspection request with LinkedIN API
+  */
+
   @RequestMapping(value = "/token_introspection")
   public String token_introspection() {
         HttpEntity request =  service.introspectToken(token);
@@ -99,6 +104,10 @@ public class LiOauthController {
         return response ;
 
   }
+
+  /*
+  * Make a Refresh Token request with LinkedIN API
+  */
 
   @RequestMapping(value = "/refresh_token")
   public String refresh_token() throws IOException {
@@ -111,6 +120,9 @@ public class LiOauthController {
     }
   }
 
+  /*
+  * Make a Public profile request with LinkedIN API
+  */
 
   @RequestMapping(value = "/profile")
   public String profile() {

@@ -23,7 +23,6 @@ public class MainController {
 	@Autowired
 	private RestTemplate restTemplate;
 	private String SERVER_URL = "http://127.0.0.1:5000/";
-	private String action = "";
 
 
     /**
@@ -31,8 +30,8 @@ public class MainController {
      **/
 
 	@GetMapping("/")
-	public String oauth( @RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model ) {
-		action = "Please Click login with linkedIn Button to generate access token!";
+	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
+		String action = "Please Click login with linkedIn Button to generate access token!";
 		String AUTH_URL = SERVER_URL  + "login";
 		model.addAttribute( "auth_url", AUTH_URL);
 		model.addAttribute( "output", "response" );
@@ -45,15 +44,16 @@ public class MainController {
 	 * To return a response and updates it on UI
      **/
 
-	@PostMapping(path = "/", produces = {"application/json", "application/xml"},  consumes = {"application/x-www-form-urlencoded"} )
-	public String postBody( @RequestBody String POST_ARRAY, final Model model ) {
+	@PostMapping(path = "/", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
+	public String postBody(@RequestBody String POST_ARRAY, final Model model) {
 		String response = "";
 
-		if (POST_ARRAY == "profile=Get+Profile")
-		{
+		if (POST_ARRAY.equals("profile=Get+Profile")){
+			
 			response = restTemplate.getForObject(SERVER_URL  + "profile", String.class);
 
-		} else if (POST_ARRAY == "refresh_token=Refresh+Token"){
+		} else if (POST_ARRAY.equals("refresh_token=Refresh+Token")){ 
+
 			response = restTemplate.getForObject(SERVER_URL  + "refresh_token", String.class);
 		} else {
 			//token_Introspection=Token+Introspection
