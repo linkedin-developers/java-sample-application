@@ -2,6 +2,7 @@ package com.example.servingwebcontent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 /*
 * Create Spring Boot Application and set a default controller
 */

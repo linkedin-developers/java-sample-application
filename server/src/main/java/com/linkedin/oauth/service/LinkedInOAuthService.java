@@ -68,7 +68,7 @@ public final class LinkedInOAuthService {
      */
     public HttpEntity getAccessToken(final String code) throws IOException {
 
-        MultiValueMap<String, String> parameters= new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(GRANT_TYPE, GrantType.AUTHORIZATION_CODE.getGrantType());
         parameters.add(CODE, code);
         parameters.add(REDIRECT_URI, this.redirectUri);
@@ -88,7 +88,7 @@ public final class LinkedInOAuthService {
      * @throws IOException
      */
     public HttpEntity getAccessTokenFromRefreshToken(final String refreshToken) throws IOException {
-        MultiValueMap<String, String> parameters= new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(GRANT_TYPE, GrantType.REFRESH_TOKEN.getGrantType());
         parameters.add(REFRESH_TOKEN, refreshToken);
         parameters.add(CLIENT_ID, this.apiKey);
@@ -107,9 +107,8 @@ public final class LinkedInOAuthService {
      * String response= restTemplate.postForObject(REQUEST_TOKEN_URL, request , String.class);
      *       accessToken[0] = service.convertJsonTokenToPojo(response);
      */
-    public HttpEntity getAccessToken()
-    {
-        MultiValueMap<String, String> parameters= new LinkedMultiValueMap<String, String>();
+    public HttpEntity getAccessToken() {
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(GRANT_TYPE, GrantType.CLIENT_CREDENTIALS.getGrantType());
         parameters.add(CLIENT_ID, this.apiKey);
         parameters.add(CLIENT_SECRET, this.apiSecret);
@@ -126,7 +125,7 @@ public final class LinkedInOAuthService {
      * @return JSON String response
      */
     public HttpEntity introspectToken(final String token) {
-        MultiValueMap<String, String> parameters= new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(CLIENT_ID, this.apiKey);
         parameters.add(CLIENT_SECRET, this.apiSecret);
         parameters.add(TOKEN, token);
@@ -146,33 +145,6 @@ public final class LinkedInOAuthService {
     public AccessToken convertJsonTokenToPojo(final String accessToken) throws IOException {
         return new ObjectMapper().readValue(accessToken, AccessToken.class);
     }
-
-    /**
-     * Method to get the access token via the 3-legged LinkedIn OAuth2.0 flow.
-     * The consumer of this method does not need to invoke the {@link #getAccessToken(String)} separately,
-     * as this is implicitly taken care of by the HttpHandler class
-     *
-     * @param service an instance of the LinkedInOAuthService
-     * @throws Exception
-
-    public AccessToken getAccessToken(@RequestParam(name="code", required=false) String code, final LinkedInOAuthService service) throws Exception {
-        AccessToken accessToken = new AccessToken();
-
-        final String secretState = "secret" + new Random().nextInt(999_999);
-        final String authorizationUrl = service.createAuthorizationUrlBuilder()
-            .state(secretState)
-            .build();
-
-        System.out.println("Authorize LinkedIn here:");
-        System.out.println(authorizationUrl);
-
-        if(code != null){
-            HttpEntity response = getAccessToken(code);
-            accessToken = service.convertJsonTokenToPojo(response);
-        }
-        return accessToken;
-    }
-     */
 
     /**
      * Builder class for LinkedIn's OAuth Service
