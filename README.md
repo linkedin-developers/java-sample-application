@@ -6,11 +6,12 @@ Rest API calls to Oauth and LMS functions. Separate Client and Server components
 Server Creates and stores the access token, Makes API calls with payload on a request from client.
 
 # The following technologies are used to develop this sample application:
-Spring Boot: Used as web server framework
-LinkedIn OAuth 3.0: Authenticate with LinkedIn APIs
-Maven
-Java 7+
-Create a LinkedIn developer application
+- Spring Boot: Used as web server framework
+- LinkedIn OAuth 3.0: Authenticate with LinkedIn APIs
+- Maven
+- Java 7+
+
+# Create a LinkedIn developer application
 Before you can configure and run this application, you need to have an application registered in LinkedIn Developer Portal. Once you have your application, please obtain the Client ID and Client Secret.
 
 Add http://localhost:8080/login to the Authorized Redirect URLs under Authentication section.
