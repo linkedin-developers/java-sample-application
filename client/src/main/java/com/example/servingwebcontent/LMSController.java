@@ -22,7 +22,7 @@ public class LMSController {
 
     @Autowired
     private RestTemplate lmsTemplate;
-    private String SERVER_URL = "http://127.0.0.1:5000/";
+    static final String SERVER_URL = "http://127.0.0.1:5000/";
 
 
     /**
@@ -32,7 +32,7 @@ public class LMSController {
     @GetMapping("/lms")
     public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
         String action = "Please Click login with linkedIn Button to generate access token!";
-        String AUTH_URL = SERVER_URL + "login";
+        static final String AUTH_URL = SERVER_URL + "login";
         model.addAttribute("auth_url", AUTH_URL);
         model.addAttribute("output", "response");
         model.addAttribute("action", action);
@@ -50,10 +50,10 @@ public class LMSController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody String POST_ARRAY, final Model model) {
+    public String postBody(@RequestBody String post_array, final Model model) {
         String response = "";
 
-        switch (POST_ARRAY) {
+        switch (post_array) {
             case "Check_token=Check+Token":
                 response = lmsTemplate.getForObject(SERVER_URL + "refresh_token", String.class);
                 break;
@@ -64,7 +64,7 @@ public class LMSController {
                 response = lmsTemplate.getForObject(SERVER_URL + "Get_user_org_access", String.class);
                 break;
             case "Fetch_ad_account=Fetch+Ad+Account+by+ID":
-                response = lmsTemplate.getForObject(SERVER_URL + "Fetch_ad_accoun", String.class);
+                response = lmsTemplate.getForObject(SERVER_URL + "Fetch_ad_account", String.class);
                 break;
             case "Get_ad_account_user=Get+Ad+Account+User":
                 response = lmsTemplate.getForObject(SERVER_URL + "Get_ad_account_user", String.class);
@@ -79,7 +79,7 @@ public class LMSController {
         }
 
         model.addAttribute("output", response);
-        model.addAttribute("action", POST_ARRAY);
+        model.addAttribute("action", post_array);
         return "lms";
     }
 
