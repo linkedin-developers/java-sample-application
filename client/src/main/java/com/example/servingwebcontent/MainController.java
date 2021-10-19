@@ -21,8 +21,8 @@ public class MainController {
     }
 
     @Autowired
-    private RestTemplate restTemplate;
-    private String SERVER_URL = "http://127.0.0.1:5000/";
+    static final RestTemplate restTemplate;
+    static final String SERVER_URL = "http://127.0.0.1:5000/";
 
 
     /**
@@ -32,7 +32,7 @@ public class MainController {
     @GetMapping("/")
     public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
         String action = "Please Click login with linkedIn Button to generate access token!";
-        String AUTH_URL = SERVER_URL + "login";
+        static final AUTH_URL = SERVER_URL + "login";
         model.addAttribute("auth_url", AUTH_URL);
         model.addAttribute("output", "response");
         model.addAttribute("action", action);
@@ -50,14 +50,14 @@ public class MainController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody String POST_ARRAY, final Model model) {
+    public String postBody(@RequestBody String post_array, final Model model) {
         String response = "";
 
-        if (POST_ARRAY.equals("profile=Get+Profile")) {
+        if (post_array.equals("profile=Get+Profile")) {
 
             response = restTemplate.getForObject(SERVER_URL + "profile", String.class);
 
-        } else if (POST_ARRAY.equals("refresh_token=Refresh+Token")) {
+        } else if (post_array.equals("refresh_token=Refresh+Token")) {
 
             response = restTemplate.getForObject(SERVER_URL + "refresh_token", String.class);
         } else {
@@ -66,7 +66,7 @@ public class MainController {
         }
 
         model.addAttribute("output", response);
-        model.addAttribute("action", POST_ARRAY);
+        model.addAttribute("action", post_array);
         return "oauthli";
     }
 
