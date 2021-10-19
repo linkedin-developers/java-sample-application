@@ -32,8 +32,7 @@ public class LMSController {
     @GetMapping("/lms")
     public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
         String action = "Please Click login with linkedIn Button to generate access token!";
-        static final String AUTH_URL = SERVER_URL + "login";
-        model.addAttribute("auth_url", AUTH_URL);
+        model.addAttribute("auth_url", SERVER_URL + "login");
         model.addAttribute("output", "response");
         model.addAttribute("action", action);
         return "lms";
@@ -50,7 +49,7 @@ public class LMSController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody String post_array, final Model model) {
+    public String postBody(@RequestBody final String post_array, final Model model) {
         String response = "";
 
         switch (post_array) {
