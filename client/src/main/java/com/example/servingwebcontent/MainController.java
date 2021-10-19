@@ -15,54 +15,59 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 public class MainController {
 
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
 
-	@Autowired
-	private RestTemplate restTemplate;
-	private String SERVER_URL = "http://127.0.0.1:5000/";
+    @Autowired
+    private RestTemplate restTemplate;
+    private String SERVER_URL = "http://127.0.0.1:5000/";
 
 
     /**
      * Serves a html webpage with operations related to OAuth
      **/
 
-	@GetMapping("/")
-	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
-		String action = "Please Click login with linkedIn Button to generate access token!";
-		String AUTH_URL = SERVER_URL  + "login";
-		model.addAttribute( "auth_url", AUTH_URL);
-		model.addAttribute( "output", "response" );
-		model.addAttribute( "action", action );
-		return "oauthli";
-	}
+    @GetMapping("/")
+    public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
+        String action = "Please Click login with linkedIn Button to generate access token!";
+        String AUTH_URL = SERVER_URL + "login";
+        model.addAttribute("auth_url", AUTH_URL);
+        model.addAttribute("output", "response");
+        model.addAttribute("action", action);
+        return "oauthli";
+    }
 
-	/**
+    /**
      * Handles the post requests of Html page, calls the API endpoints of server URL.
-	 * To return a response and updates it on UI
+     * To return a response and updates it on UI
      **/
 
-	@PostMapping(path = "/", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-	public String postBody(@RequestBody String POST_ARRAY, final Model model) {
-		String response = "";
+    @PostMapping(path = "/", produces = {
+        "application/json",
+        "application/xml"
+    }, consumes = {
+        "application/x-www-form-urlencoded"
+    })
+    public String postBody(@RequestBody String POST_ARRAY, final Model model) {
+        String response = "";
 
-		if (POST_ARRAY.equals("profile=Get+Profile")){
-			
-			response = restTemplate.getForObject(SERVER_URL  + "profile", String.class);
+        if (POST_ARRAY.equals("profile=Get+Profile")) {
 
-		} else if (POST_ARRAY.equals("refresh_token=Refresh+Token")){ 
+            response = restTemplate.getForObject(SERVER_URL + "profile", String.class);
 
-			response = restTemplate.getForObject(SERVER_URL  + "refresh_token", String.class);
-		} else {
-			//token_Introspection=Token+Introspection
-			response = restTemplate.getForObject(SERVER_URL  + "token_Introspection", String.class);
-		}
+        } else if (POST_ARRAY.equals("refresh_token=Refresh+Token")) {
 
-		model.addAttribute("output", response);
-		model.addAttribute("action", POST_ARRAY);
-		return "oauthli";
-	}
+            response = restTemplate.getForObject(SERVER_URL + "refresh_token", String.class);
+        } else {
+            //token_Introspection=Token+Introspection
+            response = restTemplate.getForObject(SERVER_URL + "token_Introspection", String.class);
+        }
+
+        model.addAttribute("output", response);
+        model.addAttribute("action", POST_ARRAY);
+        return "oauthli";
+    }
 
 }
