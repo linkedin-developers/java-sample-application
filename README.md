@@ -27,15 +27,15 @@ Edit /server/src/main/resources/config.properties with your custom values
 To start server:
 
 Navigate into the server folder
-Run mvn install
-Run mvn spring-boot:run
+1. Run mvn install
+2. Run mvn spring-boot:run
 The server will be running on http://localhost:8080/
 
 To start client:
 
 Navigate into the client folder
-Run mvn install
-Run mvn spring-boot:run
+1. Run mvn install
+2. Run mvn spring-boot:run
 The client will be running on http://localhost:8989/
 
 
