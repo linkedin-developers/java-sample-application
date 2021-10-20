@@ -18,12 +18,12 @@ import org.springframework.web.client.RestTemplate;
 public final class MainController {
 
     @Bean
-    public RestTemplate REST_TEMPLATE(final RestTemplateBuilder builder) {
+    public RestTemplate Rest_Template(final RestTemplateBuilder builder) {
         return builder.build();
     }
 
     @Autowired
-    static final RestTemplate REST_TEMPLATE;
+    static final RestTemplate Rest_Template;
     static final String SERVER_URL = "http://127.0.0.1:5000/";
 
 
@@ -56,14 +56,14 @@ public final class MainController {
 
         if (data.equals("profile=Get+Profile")) {
 
-            response = REST_TEMPLATE.getForObject(SERVER_URL + "profile", String.class);
+            response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
 
         } else if (data.equals("refresh_token=Refresh+Token")) {
 
-            response = REST_TEMPLATE.getForObject(SERVER_URL + "refresh_token", String.class);
+            response = Rest_Template.getForObject(SERVER_URL + "refresh_token", String.class);
         } else {
             //token_Introspection=Token+Introspection
-            response = REST_TEMPLATE.getForObject(SERVER_URL + "token_Introspection", String.class);
+            response = Rest_Template.getForObject(SERVER_URL + "token_Introspection", String.class);
         }
 
         model.addAttribute("output", response);
