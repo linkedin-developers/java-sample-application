@@ -24,7 +24,7 @@ import static com.linkedin.oauth.util.Constants.*;
 
 
 @RestController
-public class LiOauthController {
+public final class LiOauthController {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -46,7 +46,7 @@ public class LiOauthController {
      */
 
     @RequestMapping(value = "/login")
-    public String oauth(@RequestParam(name = "code", required = false) String code, HttpSession session) throws Exception {
+    public String oauth(@RequestParam(name = "code", required = false) String code, final HttpSession session) throws Exception {
 
         InputStream inputStream = LiOauthController.class.getClassLoader().getResourceAsStream(propFileName);
         if (inputStream != null) {
@@ -63,7 +63,7 @@ public class LiOauthController {
             .build();
 
         session.setAttribute("service", service);
-        final String secretState = "secret";// + new Random().nextInt(999 _999);
+        final String secretState = "secret"; // + new Random().nextInt(999 _999);
         final String authorizationUrl = service.createAuthorizationUrlBuilder()
             .state(secretState)
             .build();
