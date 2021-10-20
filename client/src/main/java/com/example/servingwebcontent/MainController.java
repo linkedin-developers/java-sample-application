@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 public final class MainController {
 
     @Bean
-    public RestTemplate resttemplate(RestTemplateBuilder final builder) {
+    public RestTemplate resttemplate(final RestTemplateBuilder builder) {
         return builder.build();
     }
 
@@ -30,7 +30,7 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-    public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
+    public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") final String name, final Model model) {
         String action = "Please Click login with linkedIn Button to generate access token!";
         model.addAttribute("auth_url", SERVER_URL + "login");
         model.addAttribute("output", "response");
@@ -49,7 +49,7 @@ public final class MainController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody String data, final Model model) {
+    public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
 
         if (data.equals("profile=Get+Profile")) {
