@@ -28,7 +28,7 @@ import static com.linkedin.oauth.util.Constants.*;
 
 
 @RestController
-public class LMSController {
+public class LMSController () {
 
     @Bean
     public RestTemplate lmsTemplate(RestTemplateBuilder builder) {
