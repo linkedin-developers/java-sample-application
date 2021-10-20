@@ -126,7 +126,7 @@ public class LiOauthController {
 
     @RequestMapping(value = "/profile")
     public String profile() {
-        private RestTemplate authTemplate = new RestTemplateBuilder(rt - > rt.getInterceptors().add((request, body, execution) - > {
+        final RestTemplate authTemplate = new RestTemplateBuilder(rt - > rt.getInterceptors().add((request, body, execution) - > {
             request.getHeaders().add("Authorization", "Bearer " + token);
             return execution.execute(request, body);
         })).build();
