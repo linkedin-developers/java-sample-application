@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public final class ConsumingRestApplication {
     
-    private ConsumingRestApplication(){}
+    private ConsumingRestApplication() { }
     
     public static void main(final String[] args) {
         SpringApplication.run(ConsumingRestApplication.class, args);
