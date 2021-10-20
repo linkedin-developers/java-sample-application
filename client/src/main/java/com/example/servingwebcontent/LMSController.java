@@ -13,10 +13,10 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Controller
-public class LMSController {
+public final class LMSController {
 
     @Bean
-    public RestTemplate lmsTemplate(RestTemplateBuilder builder) {
+    public final RestTemplate lmsTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
 
@@ -30,7 +30,7 @@ public class LMSController {
      **/
 
     @GetMapping("/lms")
-    public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
+    public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") final String name, final Model model) {
         String action = "Please Click login with linkedIn Button to generate access token!";
         model.addAttribute("auth_url", SERVER_URL + "login");
         model.addAttribute("output", "response");
