@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.Random;
+//import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import static com.linkedin.oauth.util.Constants.*;
 public final class LiOauthController {
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    public RestTemplate restTemplate(final RestTemplateBuilder builder) {
         return builder.build();
     }
 
@@ -46,7 +46,7 @@ public final class LiOauthController {
      */
 
     @RequestMapping(value = "/login")
-    public String oauth(@RequestParam(name = "code", required = false) String code, final HttpSession session) throws Exception {
+    public String oauth(@RequestParam(name = "code", required = false) final String code, final HttpSession session) throws Exception {
 
         InputStream inputStream = LiOauthController.class.getClassLoader().getResourceAsStream(propFileName);
         if (inputStream != null) {
