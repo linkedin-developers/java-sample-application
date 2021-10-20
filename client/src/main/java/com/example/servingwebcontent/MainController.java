@@ -49,14 +49,14 @@ public class MainController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody String post_array, final Model model) {
+    public String postBody(@RequestBody String data, final Model model) {
         String response = "";
 
-        if (post_array.equals("profile=Get+Profile")) {
+        if (data.equals("profile=Get+Profile")) {
 
             response = restTemplate.getForObject(SERVER_URL + "profile", String.class);
 
-        } else if (post_array.equals("refresh_token=Refresh+Token")) {
+        } else if (data.equals("refresh_token=Refresh+Token")) {
 
             response = restTemplate.getForObject(SERVER_URL + "refresh_token", String.class);
         } else {
@@ -65,7 +65,7 @@ public class MainController {
         }
 
         model.addAttribute("output", response);
-        model.addAttribute("action", post_array);
+        model.addAttribute("action", data);
         return "oauthli";
     }
 

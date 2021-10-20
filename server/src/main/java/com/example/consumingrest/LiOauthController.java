@@ -63,7 +63,7 @@ public class LiOauthController {
             .build();
 
         session.setAttribute("service", service);
-        final String secretState = "secret" + new Random().nextInt(999 _999);
+        final String secretState = "secret";// + new Random().nextInt(999 _999);
         final String authorizationUrl = service.createAuthorizationUrlBuilder()
             .state(secretState)
             .build();
