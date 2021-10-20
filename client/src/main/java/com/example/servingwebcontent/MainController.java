@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-
+/*
+* Main controller called by springboot to map URL's
+ */
 @Controller
 public final class MainController {
 
@@ -21,7 +23,7 @@ public final class MainController {
     }
 
     @Autowired
-    static final RestTemplate resttemplate;
+    public RestTemplate resttemplate;
     static final String SERVER_URL = "http://127.0.0.1:5000/";
 
 
