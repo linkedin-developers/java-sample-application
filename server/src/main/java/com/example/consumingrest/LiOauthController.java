@@ -126,10 +126,11 @@ public class LiOauthController {
 
     @RequestMapping(value = "/profile")
     public String profile() {
+        /** 
         final RestTemplate authTemplate = new RestTemplateBuilder(rt - > rt.getInterceptors().add((request, body, execution) - > {
             request.getHeaders().add("Authorization", "Bearer " + token);
             return execution.execute(request, body);
-        })).build();
-        return authTemplate.getForObject("https://api.linkedin.com/v2/me", String.class);
+        })).build();*/
+        return restTemplate.getForObject("https://api.linkedin.com/v2/me", String.class);
     }
 }
