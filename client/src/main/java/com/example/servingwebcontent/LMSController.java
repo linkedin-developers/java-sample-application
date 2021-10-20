@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 public final class LMSController {
 
     @Bean
-    public final RestTemplate lmsTemplate(RestTemplateBuilder builder) {
+    public RestTemplate lmsTemplate(RestTemplateBuilder final builder) {
         return builder.build();
     }
 
@@ -49,10 +49,10 @@ public final class LMSController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody final String post_array, final Model model) {
+    public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
 
-        switch (post_array) {
+        switch (data) {
             case "Check_token=Check+Token":
                 response = lmsTemplate.getForObject(SERVER_URL + "refresh_token", String.class);
                 break;
@@ -78,7 +78,7 @@ public final class LMSController {
         }
 
         model.addAttribute("output", response);
-        model.addAttribute("action", post_array);
+        model.addAttribute("action", data);
         return "lms";
     }
 
