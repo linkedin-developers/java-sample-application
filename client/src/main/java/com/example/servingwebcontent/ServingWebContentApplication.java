@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public final class ServingWebContentApplication {
+public class ServingWebContentApplication {
 
 	private ServingWebContentApplication() { }
 	public static void main(final String[] args) {

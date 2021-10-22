@@ -23,7 +23,7 @@ public final class MainController {
     }
 
     @Autowired
-    static final RestTemplate Rest_Template;
+    static final RestTemplate Rest_Template = new RestTemplate();
     static final String SERVER_URL = "http://127.0.0.1:5000/";
 
 
