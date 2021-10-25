@@ -33,9 +33,10 @@ public class ServingWebContentApplicationTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void greeting() throws Exception {
+	public void template() throws Exception {
 		mockMvc.perform(get("/"))
 				.andExpect(content().string(containsString("Java demo Authenticate")));
+				//content().contentType(contentType)
 	}
 
 }
