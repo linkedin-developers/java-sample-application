@@ -37,17 +37,14 @@ jobs:
           VALIDATE_JAVA : true
 
       # Runs a spring boot server and test cases
-      - name: Build and Run Tests for client
+      - name: Build and Run Tests for client & Server
         run: |
           cd client
           mvn spring-boot:run
           cd /
-      
-      # Runs a spring boot server and test cases
-      - name: Build and Run Tests for server
-        run: |
           cd server
           mvn spring-boot:run
+      
 
           
 
