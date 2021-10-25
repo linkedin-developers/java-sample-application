@@ -36,9 +36,16 @@ jobs:
           GITHUB_TOKEN : ${{secrets.GITHUB_TOKEN}}
           VALIDATE_JAVA : true
 
-      # Runs a single command using the runners shell
-      - name: Build and Run Tests
+      # Runs a spring boot server and test cases
+      - name: Build and Run Tests for client
         run: |
           cd client
+          mvn spring-boot:run
+      
+      # Runs a spring boot server and test cases
+      - name: Build and Run Tests for server
+        run: |
+          cd ..
+          cd server
           mvn spring-boot:run
 
