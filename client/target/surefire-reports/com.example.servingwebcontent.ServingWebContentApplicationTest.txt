@@ -1,8 +1,9 @@
 -------------------------------------------------------------------------------
 Test set: com.example.servingwebcontent.ServingWebContentApplicationTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.988 s <<< FAILURE! - in com.example.servingwebcontent.ServingWebContentApplicationTest
-greeting  Time elapsed: 0.006 s  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.035 s <<< FAILURE! - in com.example.servingwebcontent.ServingWebContentApplicationTest
+homePage  Time elapsed: 0.005 s  <<< ERROR!
 java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: java.lang.IllegalArgumentException: No visible constructors in class com.example.servingwebcontent.ServingWebContentApplication
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'Rest_Template' defined in class path resource [com/example/servingwebcontent/MainController.class]: Unsatisfied dependency expressed through method 'Rest_Template' parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.boot.web.client.RestTemplateBuilder' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.boot.web.client.RestTemplateBuilder' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 

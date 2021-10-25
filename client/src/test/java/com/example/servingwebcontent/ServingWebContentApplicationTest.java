@@ -18,7 +18,7 @@ package com.example.servingwebcontent;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,12 +31,20 @@ public class ServingWebContentApplicationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
-	@Test
+    /***
+	
 	public void template() throws Exception {
 		mockMvc.perform(get("/"))
-				.andExpect(content().string(containsString("Java demo Authenticate")));
+				.andExpect(status().isOk());
+				//.andExpect(content().contentType(contentType)));
 				//content().contentType(contentType)
+				//.string(containsString("Java demo Authenticate"))
+	} */
+
+	@Test
+	public void homePage() throws Exception {
+		mockMvc.perform(get("/"))
+				.andExpect(content().string(containsString("Please Click login with linkedIn Button to generate access token!")));
 	}
 
 }

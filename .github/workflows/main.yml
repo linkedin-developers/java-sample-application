@@ -39,7 +39,7 @@ jobs:
           mvn spring-boot:run
           cd ..
           cd server
-          mvn spring-boot:run
+          mvn clean install
       
 
           
