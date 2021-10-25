@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 /*
@@ -33,7 +32,7 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-    public String oauth( final Model model) {
+    public String oauth(final Model model) {
         String action = "Please Click login with linkedIn Button to generate access token!";
         model.addAttribute("auth_url", SERVER_URL + "login");
         model.addAttribute("output", "response");
