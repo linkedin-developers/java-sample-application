@@ -38,7 +38,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build and Run Tests
-        run: cd client
-             mvn clean install
-             mvn spring-boot:run
+        run: |
+          cd client
+          mvn clean install
+          mvn spring-boot:run
 
