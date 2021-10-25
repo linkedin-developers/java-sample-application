@@ -38,14 +38,13 @@ jobs:
 
       # Runs a spring boot server and test cases
       - name: Build and Run Tests for client
-        run: |
-          cd client
-          mvn spring-boot:run
+        working-directory: ./client
+        run: mvn spring-boot:run
       
       # Runs a spring boot server and test cases
       - name: Build and Run Tests for server
-        run: |
-          cd ..
-          cd server
-          mvn spring-boot:run
+        working-directory: ./server
+        run: mvn spring-boot:run
+
+          
 
