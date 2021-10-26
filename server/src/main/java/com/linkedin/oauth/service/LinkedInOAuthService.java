@@ -121,7 +121,7 @@ public final class LinkedInOAuthService {
      * @param token String representation of the access token
      * @return JSON String response
      */
-    public HttpEntity introspectToken(final String token) throws Exception{
+    public HttpEntity introspectToken(final String token) throws Exception {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(CLIENT_ID, this.apiKey);
         parameters.add(CLIENT_SECRET, this.apiSecret);

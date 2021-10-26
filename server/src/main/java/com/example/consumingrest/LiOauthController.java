@@ -99,7 +99,7 @@ public final class LiOauthController {
      */
 
     @RequestMapping(value = "/token_introspection")
-    public String token_introspection() throws Exception{
+    public String token_introspection() throws Exception {
 
         try {
             HttpEntity request = service.introspectToken(token);
@@ -111,7 +111,7 @@ public final class LiOauthController {
             return "Error Introspecting access token!";
         }
     }
-    
+
 
     /*
      * Make a Refresh Token request with LinkedIN API
@@ -133,7 +133,7 @@ public final class LiOauthController {
      */
 
     @RequestMapping(value = "/profile")
-    public String profile() throws Exception{
+    public String profile() throws Exception {
         try {
             return restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
         } catch (Exception e) {
