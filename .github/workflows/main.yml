@@ -36,7 +36,7 @@ jobs:
       - name: Build and Run Tests for client & Server
         run: |
           cd client
-          mvn spring-boot:run
+          mvn clean install
           cd ..
           cd server
           mvn clean install

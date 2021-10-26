@@ -53,21 +53,21 @@ public final class MainController {
     })
     public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
-
+        String action = "";
         if (data.equals("profile=Get+Profile")) {
-
+            action = "Getting public profile...";
             response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
 
         } else if (data.equals("refresh_token=Refresh+Token")) {
-
+            action = "Refreshing token...";
             response = Rest_Template.getForObject(SERVER_URL + "refresh_token", String.class);
         } else {
-            //token_Introspection=Token+Introspection
+            action = "Performing token introspection...";
             response = Rest_Template.getForObject(SERVER_URL + "token_Introspection", String.class);
         }
 
         model.addAttribute("output", response);
-        model.addAttribute("action", data);
+        model.addAttribute("action", action);
         return "oauthli";
     }
 
