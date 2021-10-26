@@ -19,24 +19,23 @@ Add http://localhost:8080/login to the Authorized Redirect URLs under Authentica
 
 # Configure the application
 Configure client app:
-Edit MainController.java add 'SERVER_URL' with your custom values
+Edit MainController.java add 'SERVER_URL' with your custom values if you want to use another server link.
 
 Configure server app:
-Edit /server/src/main/resources/config.properties with your custom values
+Edit /server/src/main/resources/config.properties with your client credentials
 
 # Start the application
-To start server:
 
+To start server:
 Navigate into the server folder
-1. Run mvn install
-2. Run mvn spring-boot:run
+1. Run mvn install (To install all dependencies)
+2. Run mvn spring-boot:run (To run spring-boot server)
 The server will be running on http://localhost:8080/
 
 To start client:
-
 Navigate into the client folder
-1. Run mvn install
-2. Run mvn spring-boot:run
+1. Run mvn install (To install all dependencies)
+2. Run mvn spring-boot:run (To run spring-boot server)
 The client will be running on http://localhost:8989/
 
 
