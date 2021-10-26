@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 /*
-* Main controller called by springboot to map URL's
+* Main controller called by spring-boot to map URL's
  */
 
 @Controller
@@ -33,7 +33,7 @@ public final class MainController {
 
     @GetMapping("/")
     public String oauth(final Model model) {
-        String action = "Please Click login with linkedIn Button to generate access token!";
+        String action = "Access token is unavailable!";
         model.addAttribute("auth_url", SERVER_URL + "login");
         model.addAttribute("output", "response");
         model.addAttribute("action", action);

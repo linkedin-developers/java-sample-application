@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>LinkedIn OAuth: Sample Application</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{style.css}">
 </head>
@@ -9,7 +10,7 @@
     <img th:src="@{linkedinlogo.png}"  alt="LinkedIn" class="header-logo">
     <div class="row">
         <div class="col-md-6">
-            <h1>Java demo Authenticate</h1>
+            <h1>LinkedIn OAuth: Sample Application</h1>
             <h5>Please click on the link below to generate 3 legged auth access token...</h5>
             <a th:href="${auth_url}" target="_blank"><button class="btn btn-primary" >Login with LinkedIn</button></a>
             <h5> <p th:text="${action}" /></h5>
@@ -26,4 +27,3 @@
     </div></div>
 </body>
 </html>
-<!---<p th:text="'Hello, ' + ${name} + '!'" />--->
