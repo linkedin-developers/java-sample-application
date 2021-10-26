@@ -66,7 +66,7 @@ public final class LinkedInOAuthService {
      * @return response of LinkedIn's 3-legged token flow captured in a POJO {@link AccessToken}
      * @throws IOException
      */
-    public HttpEntity getAccessToken(final String code) throws IOException {
+    public HttpEntity getAccessToken3Legged(final String code) throws IOException {
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(GRANT_TYPE, GrantType.AUTHORIZATION_CODE.getGrantType());
@@ -96,7 +96,6 @@ public final class LinkedInOAuthService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
-        //String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request , String.class);
         return request;
     }
 
@@ -104,10 +103,8 @@ public final class LinkedInOAuthService {
      * Get access token by LinkedIn's OAuth2.0 Client Credentials flow
      * @return JSON String response
      * @throws IOException
-     * String response= restTemplate.postForObject(REQUEST_TOKEN_URL, request , String.class);
-     *       accessToken[0] = service.convertJsonTokenToPojo(response);
      */
-    public HttpEntity getAccessToken() {
+    public HttpEntity getAccessToken2Legged() throws Exception {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(GRANT_TYPE, GrantType.CLIENT_CREDENTIALS.getGrantType());
         parameters.add(CLIENT_ID, this.apiKey);
@@ -120,11 +117,11 @@ public final class LinkedInOAuthService {
     }
 
     /**
-     * Introspect token using LinkedIn's Auth2.0 tokenIntrospect API
+     * Introspect token using LinkedIn's Auth tokenIntrospect API
      * @param token String representation of the access token
      * @return JSON String response
      */
-    public HttpEntity introspectToken(final String token) {
+    public HttpEntity introspectToken(final String token) throws Exception{
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         parameters.add(CLIENT_ID, this.apiKey);
         parameters.add(CLIENT_SECRET, this.apiSecret);
