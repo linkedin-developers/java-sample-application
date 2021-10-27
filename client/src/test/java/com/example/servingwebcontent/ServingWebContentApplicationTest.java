@@ -4,10 +4,10 @@
 
 package com.example.servingwebcontent;
 
-//import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +19,13 @@ public class ServingWebContentApplicationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-    /***
-	
-	public void template() throws Exception {
-		mockMvc.perform(get("/"))
-				.andExpect(status().isOk());
-				//.andExpect(content().contentType(contentType)));
-				//content().contentType(contentType)
-				//.string(containsString("Java demo Authenticate"))
-	} */
 
 	@Test
 	public void homePage() throws Exception {
-		mockMvc.perform(get("/"))
-				.andExpect(status().isOk());
-				//.andExpect(content().string(containsString("Please Click login with linkedIn Button to generate access token!")));
+		// N.B. jsoup can be useful for asserting HTML content
+		mockMvc.perform(get("/oauthli.html"))
+				.andExpect(content().string(containsString("LinkedIn OAuth")));
 	}
+
 
 }
