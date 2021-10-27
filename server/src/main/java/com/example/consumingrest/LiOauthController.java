@@ -46,7 +46,7 @@ public final class LiOauthController {
      */
 
     @RequestMapping(value = "/login")
-    public String oauth(@RequestParam(name = "code", required = false) final String code, final HttpSession session) throws Exception {
+    public RedirectView oauth(@RequestParam(name = "code", required = false) final String code, final HttpSession session) throws Exception {
 
         InputStream inputStream = LiOauthController.class.getClassLoader().getResourceAsStream(propFileName);
         if (inputStream != null) {
@@ -70,8 +70,7 @@ public final class LiOauthController {
             .build();
 
         RedirectView redirectView = new RedirectView();
-        if (session.getAttribute("accessToken") != null) 
-        { 
+        if (session.getAttribute("accessToken") != null) { 
             redirectView.setUrl(prop.getProperty("client_url"));
             return "Access Token is Available!";
 
@@ -93,7 +92,7 @@ public final class LiOauthController {
             redirectView.setUrl(authorizationUrl);
             return "redirect to: <a href='" + authorizationUrl + "'>LinkedIn</a>";
         }
-
+    return redirectView;
     }
 
     /*
