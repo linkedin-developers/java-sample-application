@@ -69,8 +69,12 @@ public final class LiOauthController {
             .state(secretState)
             .build();
 
-        if (session.getAttribute("accessToken") != null) {
+        RedirectView redirectView = new RedirectView();
+        if (session.getAttribute("accessToken") != null) 
+        { 
+            redirectView.setUrl(prop.getProperty("client_url"));
             return "Access Token is Available!";
+
         } else if (code != null) {
             final AccessToken[] accessToken = {
                 new AccessToken()
@@ -86,8 +90,6 @@ public final class LiOauthController {
             return "Access Token is created!";
 
         } else {
-
-            RedirectView redirectView = new RedirectView();
             redirectView.setUrl(authorizationUrl);
             return "redirect to: <a href='" + authorizationUrl + "'>LinkedIn</a>";
         }

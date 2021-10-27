@@ -24,7 +24,7 @@ public final class MainController {
     
     @Autowired
     static final RestTemplate Rest_Template = new RestTemplate();
-    static final String SERVER_URL = "http://127.0.0.1:5000/";
+    static final String SERVER_URL = "http://localhost:8989/";
 
 
     /**
@@ -63,7 +63,7 @@ public final class MainController {
             response = Rest_Template.getForObject(SERVER_URL + "refresh_token", String.class);
         } else {
             action = "Performing token introspection...";
-            response = Rest_Template.getForObject(SERVER_URL + "token_Introspection", String.class);
+            response = Rest_Template.getForObject(SERVER_URL + "token_introspection", String.class);
         }
 
         model.addAttribute("output", response);
