@@ -39,7 +39,7 @@ public final class LMSController {
   * Fetch Ad Account by ID 
   */
   @RequestMapping(value = "/Fetch_ad_account")
-  public String Fetch_ad_account(@RequestParam(name = "account", required = false) String account, final HttpSession session) {
+  public String Fetch_ad_account(@RequestParam(name = "account", required = false) final String account, final HttpSession session) {
     if (account == null) {
       return "Please pass the account ID!";
     }
