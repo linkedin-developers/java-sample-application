@@ -13,7 +13,9 @@ public final class LMSController {
   private RestTemplate lmsTemplate = new RestTemplate();
   public String token;
 
-  /* Find Ad Accounts by Authenticated User or Verifying Ad Accounts Access */
+  /*
+  * Find Ad Accounts by Authenticated User or Verifying Ad Accounts Access 
+  */
   @RequestMapping("/Find_ad_account")
   public String Find_ad_account(final HttpSession session) {
     token = (String) session.getAttribute("tokenString");
@@ -22,7 +24,9 @@ public final class LMSController {
 
   }
 
-  /* Find Ad Account roles of Authenticated User */
+  /* 
+  * Find Ad Account roles of Authenticated User 
+  */
   @RequestMapping("/Get_user_org_access")
   public String Get_user_org_access(final HttpSession session) {
     token = (String) session.getAttribute("tokenString");
@@ -31,7 +35,9 @@ public final class LMSController {
 
   }
 
-  /* Fetch Ad Account by ID */
+  /* 
+  * Fetch Ad Account by ID 
+  */
   @RequestMapping(value = "/Fetch_ad_account")
   public String Fetch_ad_account(@RequestParam(name = "account", required = false) String account, final HttpSession session) {
     if (account == null) {
