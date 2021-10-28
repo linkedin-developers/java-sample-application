@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @RestController
-public final class LMSController{
+public final class LMSController {
 
   private RestTemplate lmsTemplate = new RestTemplate();
   public String token;
@@ -34,6 +34,10 @@ public final class LMSController{
   /* Fetch Ad Account by ID */
   @RequestMapping(value = "/Fetch_ad_account")
   public String Fetch_ad_account(@RequestParam(name = "account", required = false) String account, final HttpSession session) {
+    if(account == null)
+    {
+      return "Please pass the account ID!";
+    }
     token = (String) session.getAttribute("tokenString");
     String response = lmsTemplate.getForObject("https://api.linkedin.com/v2/adAccountsV2/" + account + "?oauth2_access_token=" + token, String.class);
     return response;
