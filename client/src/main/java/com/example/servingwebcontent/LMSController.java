@@ -1,8 +1,5 @@
 package com.example.servingwebcontent;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +23,9 @@ public final class LMSController {
 	@GetMapping("/lms")
 	public String oauth(final Model model) {
 		String action = "Access token is empty!";
-		String AUTH_URL = SERVER_URL  + "login";
-		model.addAttribute( "auth_url", AUTH_URL);
-		model.addAttribute( "output", "response" );
-		model.addAttribute( "action", action );
+		model.addAttribute("auth_url", SERVER_URL  + "login");
+		model.addAttribute("output", "response");
+		model.addAttribute("action", action);
 		return "lms";
 	}
 
@@ -42,7 +38,7 @@ public final class LMSController {
 	public String postBody(@RequestBody String POST_ARRAY, final Model model, @RequestParam(name = "account_id", required = false) final String account_id) {
 		String response;
 
-		switch(POST_ARRAY){
+		switch (POST_ARRAY) {
 			case "token_introspection=Token+Introspection":
 				response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			  break;
