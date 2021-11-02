@@ -35,7 +35,7 @@ public final class LMSController {
 	 **/
 
 	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-	public String postBody(@RequestBody final String data, final Model model, @RequestParam(name = "account_id", required = false) final String account_id) {
+	public String postBody(@RequestBody final String data, final Model model) {
 		String response;
 
 		switch (data) {
@@ -52,7 +52,6 @@ public final class LMSController {
 		}
 
 		model.addAttribute("output", response);
-		model.addAttribute("account_id", "");
 		model.addAttribute("action", "Making Server API request...");
 		return "lms";
 	}
