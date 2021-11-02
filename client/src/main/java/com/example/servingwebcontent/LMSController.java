@@ -13,14 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Controller
-public class LMSController {
+public final class LMSController {
 
-	@Bean
-	public RestTemplate lmsTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
-
-	@Autowired
 	private RestTemplate lmsTemplate;
 	private String SERVER_URL = "http://localhost:8989/";
 
@@ -30,7 +24,7 @@ public class LMSController {
 	 **/
 
 	@GetMapping("/lms")
-	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
+	public String oauth(final Model model) {
 		String action = "Access token is empty!";
 		String AUTH_URL = SERVER_URL  + "login";
 		model.addAttribute( "auth_url", AUTH_URL);
@@ -45,7 +39,7 @@ public class LMSController {
 	 **/
 
 	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-	public String postBody(@RequestBody String POST_ARRAY, final Model model, @RequestParam(name = "account_id", required = false) String account_id) {
+	public String postBody(@RequestBody String POST_ARRAY, final Model model, @RequestParam(name = "account_id", required = false) final String account_id) {
 		String response;
 
 		switch(POST_ARRAY){
@@ -55,7 +49,7 @@ public class LMSController {
 			case "Find_ad_account=Find+Ad+Accounts":
 				response = lmsTemplate.getForObject(SERVER_URL  + "Find_ad_account", String.class);
 				break;
-			case "Get_user_org_access=Get+user+org+access" :
+			case "Get_user_org_access=Get+user+org+access":
 				response = lmsTemplate.getForObject(SERVER_URL  + "Get_user_org_access", String.class);
 				break;
 			default: response = "No API calls made!";
