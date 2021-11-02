@@ -35,10 +35,10 @@ public final class LMSController {
 	 **/
 
 	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-	public String postBody(@RequestBody String POST_ARRAY, final Model model, @RequestParam(name = "account_id", required = false) final String account_id) {
+	public String postBody(@RequestBody final String data, final Model model, @RequestParam(name = "account_id", required = false) final String account_id) {
 		String response;
 
-		switch (POST_ARRAY) {
+		switch (data) {
 			case "token_introspection=Token+Introspection":
 				response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			  break;
