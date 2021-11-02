@@ -6,22 +6,20 @@
 </head>
 <body>
 <div class="container">
-    <img th:src="@{linkedinlogo.png}"  alt="LinkedIn" class="header-logo">
+    <h1 class="center">LinkedIn LMS Sample Application</h1>
     <div class="row">
         <div class="col-md-6">
-            <h1>Java demo Authenticate</h1>
+            
             <h5>Please click on the link below to generate 3 legged auth access token...</h5>
             <a th:href="${auth_url}" target="_blank"><button class="btn btn-primary" >Login with LinkedIn</button></a>
             <h5> <p th:text="${action}" /></h5>
         </div>
         <div class="col-md-6">
             <form method="post">
-                <input type="submit" name="Check_token" class="btn-link" value="Check Token" />
-                <input type="submit" name="Find_ad_account_by_authenticated_user" class="btn-link" value="Find Ad Accounts" />
-                <input type="submit" name="Get_user_org_access" class="btn-link" value="Find Ad Account roles" />
-                <input type="submit" name="Fetch_ad_account" class="btn-link" value="Fetch Ad Account by ID" />
-                <input type="submit" name="Get_ad_account_user" class="btn-link" value="Get Ad Account User" />
-                <input type="submit" name="Find_ad_account_user_by_account" class="btn-link" value="Find Ad Account Users" />
+                <input type="submit" name="token_introspection" class="btn-link" value="Token Introspection" />
+                <input type="submit" name="Find_ad_account" class="btn-link" value="Find Ad Accounts" />
+                <input type="submit" name="Get_user_org_access" class="btn-link" value="Get user org access" />
+                <input type="submit" name="Fetch_ad_account" class="btn-link" value="Fetch Ad Account by account ID" />
             </form>
             <h5>OUTPUT: </h5>
             <div class="output" id="output"><p th:text="${output}" /> </div>
@@ -29,4 +27,3 @@
     </div></div>
 </body>
 </html>
-<!---<p th:text="'Hello, ' + ${name} + '!'" />--->
