@@ -25,3 +25,14 @@ hs_err_pid*
 .idea/
 .DS_Store
 target/
+.project
+server/consuming-rest-complete.iml
+server/mvnw
+server/mvnw.cmd
+server/target/
+
+client/consuming-rest-complete.iml
+client/mvnw
+client/mvnw.cmd
+client/target/
+client/.settings
