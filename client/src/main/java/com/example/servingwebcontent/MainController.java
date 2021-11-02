@@ -24,7 +24,7 @@ public final class MainController {
     
     @Autowired
     static final RestTemplate Rest_Template = new RestTemplate();
-    static final String SERVER_URL = "http://localhost:8080/";
+    static final String SERVER_URL = "http://localhost:8989/";
 
 
     /**
