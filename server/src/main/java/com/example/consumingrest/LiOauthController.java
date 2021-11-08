@@ -96,6 +96,35 @@ public final class LiOauthController {
         }
     return redirectView;
     }
+    
+
+    /*
+    * Create 2 legged auth access token
+    */
+    @RequestMapping(value = "/two_legged_auth")
+    public RedirectView two_legged_auth(final HttpSession session) throws Exception {
+        RedirectView redirectView = new RedirectView();
+        final AccessToken[] accessToken = {
+            new AccessToken()
+        };
+        try {
+        HttpEntity request = service.getAccessToken2Legged();
+        String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
+        accessToken[0] = service.convertJsonTokenToPojo(response);
+        session.setAttribute("accessToken", accessToken);
+        session.setAttribute("tokenString", accessToken[0].getAccessToken());
+        prop.setProperty("token", accessToken[0].getAccessToken());
+        token = accessToken[0].getAccessToken();
+        refresh_token = accessToken[0].getRefreshToken();
+
+        } catch (Exception e) {
+
+        e.printStackTrace();
+
+        }
+        redirectView.setUrl(prop.getProperty("client_url"));
+        return redirectView;
+    }
 
     /*
      * Make a Token Introspection request with LinkedIN API

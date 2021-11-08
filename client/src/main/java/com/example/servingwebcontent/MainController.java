@@ -21,10 +21,10 @@ public final class MainController {
     public RestTemplate Rest_Template(final RestTemplateBuilder builder) {
         return builder.build();
     }
-    
+
     @Autowired
     static final RestTemplate Rest_Template = new RestTemplate();
-    static final String SERVER_URL = "http://localhost:8989/";
+    static final String SERVER_URL = "http://localhost:8080/";
 
 
     /**
@@ -32,9 +32,9 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-	public String oauth(final Model model) {
-		final String action ="";
-		final String response="";
+	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
+		String action ="";
+		String response="";
 		try{
 			response = restTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			action = "Valid access token is ready to use!";
@@ -62,7 +62,11 @@ public final class MainController {
     public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
         String action = "";
-        if (data.equals("profile=Get+Profile")) {
+        if(data.equals("two_legged_auth=2+Legged+Auth")) {
+
+			response = restTemplate.getForObject(SERVER_URL  + "two_legged_auth", String.class);
+
+		} else if (data.equals("profile=Get+Profile")) {
             action = "Getting public profile...";
             response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
 
