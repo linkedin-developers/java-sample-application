@@ -36,7 +36,7 @@ public final class MainController {
 		String action = "";
 		String response = "";
 		try {
-			response = restTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
+			response = Rest_Template.getForObject(SERVER_URL  + "token_introspection", String.class);
 			action = "Valid access token is ready to use!";
 		} catch (Exception e) {
 			action = "Please Click login with linkedIn Button to generate access token!";
@@ -63,7 +63,7 @@ public final class MainController {
         String action = "";
         if (data.equals("two_legged_auth = 2+Legged+Auth")) {
 
-			response = restTemplate.getForObject(SERVER_URL  + "two_legged_auth", String.class);
+			response = Rest_Template.getForObject(SERVER_URL  + "two_legged_auth", String.class);
 
 		} else if (data.equals("profile = Get+Profile")) {
             action = "Getting public profile...";
