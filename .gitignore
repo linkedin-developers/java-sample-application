@@ -36,3 +36,10 @@ client/mvnw
 client/mvnw.cmd
 client/target/
 client/.settings
+client/.classpath
+client/mvnw.cmd
+server/.classpath
+server/.project
+server/.settings/org.eclipse.core.resources.prefs
+server/.settings/org.eclipse.jdt.apt.core.prefs
+server/.settings/org.eclipse.jdt.core.prefs
