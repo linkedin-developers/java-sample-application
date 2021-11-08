@@ -35,16 +35,16 @@ public final class MainController {
 	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
 		String action ="";
 		String response="";
-		try{
+		try {
 			response = restTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			action = "Valid access token is ready to use!";
-		}catch(Exception e){
+		} catch (Exception e) {
 			action = "Please Click login with linkedIn Button to generate access token!";
 		}
 		String AUTH_URL = SERVER_URL  + "login";
-		model.addAttribute( "auth_url", AUTH_URL);
-		model.addAttribute( "output", response);
-		model.addAttribute( "action", action );
+		model.addAttribute("auth_url", AUTH_URL);
+		model.addAttribute("output", response);
+		model.addAttribute("action", action);
 		return "oauthli";
 	}
 
@@ -62,15 +62,15 @@ public final class MainController {
     public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
         String action = "";
-        if(data.equals("two_legged_auth=2+Legged+Auth")) {
+        if (data.equals("two_legged_auth = 2+Legged+Auth")) {
 
 			response = restTemplate.getForObject(SERVER_URL  + "two_legged_auth", String.class);
 
-		} else if (data.equals("profile=Get+Profile")) {
+		} else if (data.equals("profile = Get+Profile")) {
             action = "Getting public profile...";
             response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
 
-        } else if (data.equals("refresh_token=Refresh+Token")) {
+        } else if (data.equals("refresh_token = Refresh+Token")) {
             action = "Refreshing token...";
             response = Rest_Template.getForObject(SERVER_URL + "refresh_token", String.class);
         } else {
