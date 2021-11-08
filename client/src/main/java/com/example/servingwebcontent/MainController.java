@@ -32,17 +32,16 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-	public String oauth(@RequestParam(name = "name", required = false, defaultValue = "World") String name, final Model model) {
-		String action ="";
-		String response="";
+	public String oauth(final Model model) {
+		String action = "";
+		String response = "";
 		try {
 			response = restTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			action = "Valid access token is ready to use!";
 		} catch (Exception e) {
 			action = "Please Click login with linkedIn Button to generate access token!";
 		}
-		String AUTH_URL = SERVER_URL  + "login";
-		model.addAttribute("auth_url", AUTH_URL);
+		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("output", response);
 		model.addAttribute("action", action);
 		return "oauthli";
