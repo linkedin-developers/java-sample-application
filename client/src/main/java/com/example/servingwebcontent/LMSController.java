@@ -21,9 +21,17 @@ public final class LMSController {
 
 	@GetMapping("/lms")
 	public String oauth(final Model model) {
-		String action = "Access token is empty!";
-		model.addAttribute("auth_url", SERVER_URL  + "login");
-		model.addAttribute("output", "response");
+		String action = "";
+		String response = "";
+		try {
+			response = Rest_Template.getForObject(SERVER_URL  + "token_introspection", String.class);
+			action = "Valid access token is ready to use!";
+		} catch (Exception e) {
+			action = "Please Click login with linkedIn Button to generate access token!";
+			e.printStackTrace();
+		}
+		model.addAttribute("auth_url", SERVER_URL + "login");
+		model.addAttribute("output", "Output");
 		model.addAttribute("action", action);
 		return "lms";
 	}
@@ -39,13 +47,30 @@ public final class LMSController {
 
 		switch (data) {
 			case "token_introspection=Token+Introspection":
-				response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
+				try {
+					response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
+				} catch (Exception e) {
+					response = "Error retrieving the data";
+                	e.printStackTrace();
+				}
 			  break;
+
 			case "Find_ad_account=Find+Ad+Accounts":
-				response = lmsTemplate.getForObject(SERVER_URL  + "Find_ad_account", String.class);
+				try {
+					response = lmsTemplate.getForObject(SERVER_URL  + "Find_ad_account", String.class);
+				} catch (Exception e) {
+					response = "Error retrieving the data";
+                	e.printStackTrace();
+				}
 				break;
+
 			case "Get_user_org_access=Get+user+org+access":
-				response = lmsTemplate.getForObject(SERVER_URL  + "Get_user_org_access", String.class);
+				try {
+					response = lmsTemplate.getForObject(SERVER_URL  + "Get_user_org_access", String.class);
+				} catch (Exception e) {
+					response = "Error retrieving the data";
+                	e.printStackTrace();
+				}
 				break;
 			default: response = "No API calls made!";
 		}
