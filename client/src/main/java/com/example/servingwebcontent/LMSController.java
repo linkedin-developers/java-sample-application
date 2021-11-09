@@ -24,7 +24,7 @@ public final class LMSController {
 		String action = "";
 		String response = "";
 		try {
-			response = Rest_Template.getForObject(SERVER_URL  + "token_introspection", String.class);
+			response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			action = "Valid access token is ready to use!";
 		} catch (Exception e) {
 			action = "Please Click login with linkedIn Button to generate access token!";
