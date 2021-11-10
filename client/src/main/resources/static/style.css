@@ -58,3 +58,19 @@ h5{
     line-height: 20px;
     color: rgba(0, 0, 0, 0.6);
 }
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    word-break: break-word;
+}
+
+tr:nth-child(even) {
+    background-color: #EOEOEO;
+}

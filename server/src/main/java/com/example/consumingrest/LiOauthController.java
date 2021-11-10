@@ -152,12 +152,15 @@ public final class LiOauthController {
     @RequestMapping(value = "/refresh_token")
     public String refresh_token() throws IOException {
         if (refresh_token != null) {
-            HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
-            String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
-            return response;
-        } else {
-            return "Refresh token does not exist!";
-        }
+            try {
+                HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
+                String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
+                return response;
+            } catch (Exception e) {
+                
+                e.printStackTrace();
+                return "Error Introspecting access token!";
+            }
     }
 
     /*

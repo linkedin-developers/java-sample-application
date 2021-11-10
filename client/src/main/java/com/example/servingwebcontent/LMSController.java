@@ -75,9 +75,17 @@ public final class LMSController {
 			default: response = "No API calls made!";
 		}
 
-		model.addAttribute("output", response);
+		model.addAttribute("output", parseJSON(response));
 		model.addAttribute("action", "Making Server API request...");
 		return "lms";
+	}
+
+	public Object parseJSON(final String response) throws Exception{
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> jsonMap = objectMapper.readValue(response,
+				new TypeReference<Map<String, Object>>(){});
+		Object elements = jsonMap.get("elements");
+		return elements;
 	}
 
 }

@@ -98,9 +98,17 @@ public final class MainController {
             }
         }
 
-        model.addAttribute("output", response);
+        model.addAttribute("output", parseJSON(response));
         model.addAttribute("action", action);
         return "oauthli";
     }
+
+    public Object parseJSON(final String response) throws Exception{
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> jsonMap = objectMapper.readValue(response,
+				new TypeReference<Map<String, Object>>(){});
+		Object elements = jsonMap.get("elements");
+		return elements;
+	}
 
 }
