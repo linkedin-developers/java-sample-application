@@ -138,7 +138,6 @@ public final class LiOauthController {
             String response = restTemplate.postForObject(TOKEN_INTROSPECTION_URL, request, String.class);
             return response;
         } catch (Exception e) {
-            
             e.printStackTrace();
             return "Error Introspecting access token!";
         }
@@ -150,17 +149,18 @@ public final class LiOauthController {
      */
 
     @RequestMapping(value = "/refresh_token")
-    public String refresh_token() throws IOException {
+    public String refresh_token() throws Exception {
         if (refresh_token != null) {
             try {
                 HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
                 String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
                 return response;
             } catch (Exception e) {
-                
                 e.printStackTrace();
-                return "Error Introspecting access token!";
             }
+            return "Error Introspecting access token!";
+        }
+        return "Refresh token is unavailable!";
     }
 
     /*
@@ -170,7 +170,8 @@ public final class LiOauthController {
     @RequestMapping(value = "/profile")
     public String profile() throws Exception {
         try {
-            return restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
+            String response = restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
             return "Error getting public profile!";
