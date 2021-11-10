@@ -35,7 +35,7 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-	public String oauth(final Model model) {
+	public String oauth(final Model model) throws Exception{
 		String action = "";
 		String response = "";
 		try {
@@ -62,7 +62,7 @@ public final class MainController {
     }, consumes = {
         "application/x-www-form-urlencoded"
     })
-    public String postBody(@RequestBody final String data, final Model model) {
+    public String postBody(@RequestBody final String data, final Model model) throws Exception{
         String response = "";
         String action = "";
         if (data.equals("two_legged_auth=2+Legged+Auth")) {
