@@ -80,10 +80,10 @@ public final class LMSController {
 		return "lms";
 	}
 
-	public Object parseJSON(final String response) throws Exception{
+	public Object parseJSON(final String response) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map<String, Object> jsonMap = objectMapper.readValue(response,
-				new TypeReference<Map<String, Object>>(){});
+				new TypeReference<Map<String, Object>>() { } );
 		Object elements = jsonMap.get("elements");
 		return elements;
 	}
