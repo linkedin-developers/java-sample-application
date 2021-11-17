@@ -59,18 +59,24 @@ h5{
     color: rgba(0, 0, 0, 0.6);
 }
 table {
-    font-family: arial, sans-serif;
+   
     border-collapse: collapse;
     width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
+  }
+  
+   td,  th {
+    border: 1px solid #ddd;
     padding: 8px;
-    word-break: break-word;
-}
-
-tr:nth-child(even) {
-    background-color: #EOEOEO;
-}
+  }
+  
+   tr:nth-child(even){background-color: #f2f2f2;}
+  
+   tr:hover {background-color: #ddd;}
+  
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #f18957;
+    color: white;
+  }

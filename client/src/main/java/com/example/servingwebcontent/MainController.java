@@ -1,9 +1,7 @@
 package com.example.servingwebcontent;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -27,7 +25,9 @@ public final class MainController {
 
     @Autowired
     static final RestTemplate Rest_Template = new RestTemplate();
-    static final String SERVER_URL = "http://localhost:8080/";
+    
+    @Value("${SERVER_URL}")
+	private String SERVER_URL;
 
 
     /**
@@ -35,16 +35,19 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-	public String oauth(final Model model) throws Exception {
-		String action = "";
+	public String oauth(final Model model) {
+		String action = "Please Click login with linkedIn Button to generate access token!";
 		String response = "";
 		try {
 			response = Rest_Template.getForObject(SERVER_URL  + "token_introspection", String.class);
-			action = "Valid access token is ready to use!";
+            if(response != "Error Introspecting access token!")
+            {
+                action = "Valid access token is ready to use!";
+            }
 		} catch (Exception e) {
-			action = "Please Click login with linkedIn Button to generate access token!";
-            e.printStackTrace();
+			e.printStackTrace();
 		}
+       
 		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("output", "Output");
 		model.addAttribute("action", action);
@@ -56,13 +59,8 @@ public final class MainController {
      * To return a response and updates it on UI
      **/
 
-    @PostMapping(path = "/", produces = {
-        "application/json",
-        "application/xml"
-    }, consumes = {
-        "application/x-www-form-urlencoded"
-    })
-    public String postBody(@RequestBody final String data, final Model model) throws Exception {
+    @PostMapping(path = "/", produces = { "application/json", "application/xml" }, consumes = { "application/x-www-form-urlencoded" })
+    public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
         String action = "";
         if (data.equals("two_legged_auth=2+Legged+Auth")) {
@@ -75,7 +73,7 @@ public final class MainController {
             }
 
 		} else if (data.equals("profile=Get+Profile")) {
-            action = "Getting public profile...";
+            action = "Getting public profile";
             try {
                 response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
             } catch (Exception e) {
@@ -84,7 +82,7 @@ public final class MainController {
             }
 
         } else if (data.equals("refresh_token=Refresh+Token")) {
-            action = "Refreshing token...";
+            action = "Refreshing token";
             try {
                 response = Rest_Template.getForObject(SERVER_URL + "refresh_token", String.class);
             } catch (Exception e) {
@@ -92,7 +90,7 @@ public final class MainController {
                 e.printStackTrace();
             }
         } else {
-            action = "Performing token introspection...";
+            action = "Performing token introspection";
             try {  
             response = Rest_Template.getForObject(SERVER_URL + "token_introspection", String.class);
             } catch (Exception e) {
@@ -101,17 +99,9 @@ public final class MainController {
             }
         }
 
-        model.addAttribute("output", parseJSON(response));
+        model.addAttribute("output", response);
         model.addAttribute("action", action);
-        return "oauthli";
+        return "index";
     }
-
-    public Object parseJSON(final String response) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, Object> jsonMap = objectMapper.readValue(response,
-				new TypeReference<Map<String, Object>>() { });
-		Object elements = jsonMap.get("elements");
-		return elements;
-	}
 
 }

@@ -1,10 +1,10 @@
 package com.example.consumingrest;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Random;
-
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import com.linkedin.oauth.builder.ScopeBuilder;
 import com.linkedin.oauth.pojo.AccessToken;
 import com.linkedin.oauth.service.LinkedInOAuthService;
@@ -70,10 +69,9 @@ public final class LiOauthController {
             .build();
 
         RedirectView redirectView = new RedirectView();
-        if (session.getAttribute("accessToken") != null) { 
+        if (session.getAttribute("accessToken") != null) 
+        { 
             redirectView.setUrl(prop.getProperty("client_url"));
-            //return "Access Token is Available!";
-
         } else if (code != null) {
             final AccessToken[] accessToken = {
                 new AccessToken()
@@ -87,11 +85,8 @@ public final class LiOauthController {
             token = accessToken[0].getAccessToken();
             refresh_token = accessToken[0].getRefreshToken();
             redirectView.setUrl(prop.getProperty("client_url"));
-            //return "Access Token is created!";
-
         } else {
             redirectView.setUrl(authorizationUrl);
-            //return "redirect to: <a href='" + authorizationUrl + "'>LinkedIn</a>";
         }
     return redirectView;
     }
@@ -107,19 +102,16 @@ public final class LiOauthController {
             new AccessToken()
         };
         try {
-        HttpEntity request = service.getAccessToken2Legged();
-        String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
-        accessToken[0] = service.convertJsonTokenToPojo(response);
-        session.setAttribute("accessToken", accessToken);
-        session.setAttribute("tokenString", accessToken[0].getAccessToken());
-        prop.setProperty("token", accessToken[0].getAccessToken());
-        token = accessToken[0].getAccessToken();
-        refresh_token = accessToken[0].getRefreshToken();
-
+            HttpEntity request = service.getAccessToken2Legged();
+            String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
+            accessToken[0] = service.convertJsonTokenToPojo(response);
+            session.setAttribute("accessToken", accessToken);
+            session.setAttribute("tokenString", accessToken[0].getAccessToken());
+            prop.setProperty("token", accessToken[0].getAccessToken());
+            token = accessToken[0].getAccessToken();
+            refresh_token = accessToken[0].getRefreshToken();
         } catch (Exception e) {
-
-        e.printStackTrace();
-
+            e.printStackTrace();
         }
         redirectView.setUrl(prop.getProperty("client_url"));
         return redirectView;
@@ -148,18 +140,14 @@ public final class LiOauthController {
      */
 
     @RequestMapping(value = "/refresh_token")
-    public String refresh_token() throws Exception {
+    public String refresh_token() throws IOException {
         if (refresh_token != null) {
-            try {
-                HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
-                String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
-                return response;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return "Error Introspecting access token!";
+            HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
+            String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
+            return response;
+        } else {
+            return "Refresh token does not exist!";
         }
-        return "Refresh token is unavailable!";
     }
 
     /*
@@ -169,8 +157,7 @@ public final class LiOauthController {
     @RequestMapping(value = "/profile")
     public String profile() throws Exception {
         try {
-            String response = restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
-            return response;
+            return restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
         } catch (Exception e) {
             e.printStackTrace();
             return "Error getting public profile!";
