@@ -25,13 +25,12 @@ public final class LMSController {
 	 **/
 
 	@GetMapping("/lms")
-	public String oauth(final Model model) {
+	public String oauth(final Model model) throws Exception {
 		String action = "Please Click login with linkedIn Button to generate access token!";
 		String response = "";
 		try {
 			response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
-		    if(response != "Error Introspecting access token!")
-            {
+		    if (response != "Error Introspecting access token!") {
                 action = "Valid access token is ready to use!";
             }
 		} catch (Exception e) {
@@ -49,10 +48,10 @@ public final class LMSController {
 	 **/
 
 	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-	public String postBody(@RequestBody final String data, final Model model) {
+	public String postBody(@RequestBody final String data, final Model model) throws Exception {
 		String response = "";
 		String output = "";
-		Object Find_ad_account = null;
+		Object Find_Ad_Account = null;
 		Object Get_user_org_access = null;
         
 		switch (data) {
@@ -70,7 +69,7 @@ public final class LMSController {
 			case "Find_ad_account=Find+Ad+Accounts":
 				try {
 					response = lmsTemplate.getForObject(SERVER_URL  + "Find_ad_account", String.class);
-				    Find_ad_account  = parseJSON(response);
+				    Find_Ad_Account  = parseJSON(response);
 					output = "Find Ad Accounts";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
@@ -92,7 +91,7 @@ public final class LMSController {
 		}
 
 		model.addAttribute("output", output);
-		model.addAttribute("Find_ad_account", Find_ad_account);
+		model.addAttribute("Find_ad_account", Find_Ad_Account);
 		model.addAttribute("Get_user_org_access", Get_user_org_access);
 		model.addAttribute("action", "Making Server API request...");
 		return "lms";

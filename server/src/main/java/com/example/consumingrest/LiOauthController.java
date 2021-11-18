@@ -69,8 +69,7 @@ public final class LiOauthController {
             .build();
 
         RedirectView redirectView = new RedirectView();
-        if (session.getAttribute("accessToken") != null) 
-        { 
+        if (session.getAttribute("accessToken") != null) { 
             redirectView.setUrl(prop.getProperty("client_url"));
         } else if (code != null) {
             final AccessToken[] accessToken = {

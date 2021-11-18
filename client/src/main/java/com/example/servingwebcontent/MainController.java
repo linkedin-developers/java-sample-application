@@ -40,8 +40,7 @@ public final class MainController {
 		String response = "";
 		try {
 			response = Rest_Template.getForObject(SERVER_URL  + "token", String.class);
-            if(response != "Error Introspecting access token!")
-            {
+            if (response != "Error Introspecting access token!") {
                 action = "Valid access token is ready to use!";
             }
 		} catch (Exception e) {
