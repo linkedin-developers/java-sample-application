@@ -22,7 +22,6 @@ public final class LMSController {
     
 	/**
 	 * Serves a html webpage with operations related to OAuth
-	 * @return html page with token introspection response
 	 **/
 
 	@GetMapping("/lms")
@@ -31,9 +30,9 @@ public final class LMSController {
 		String response = "";
 		try {
 			response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
-		    if(response != "Error Introspecting access token")
+		    if(response != "Error Introspecting access token!")
             {
-                action = "Valid access token is ready to use";
+                action = "Valid access token is ready to use!";
             }
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,9 +44,8 @@ public final class LMSController {
 	}
 
 	/**
-	 * Handles the post requests via plain HTML UI, calls the API endpoints of given server URL.
+	 * Handles the post requests of Html page, calls the API endpoints of server URL.
 	 * To return a response and updates it on UI
-	 *  @return  response json string
 	 **/
 
 	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
@@ -61,7 +59,9 @@ public final class LMSController {
 			case "token_introspection=Token+Introspection":
 				try {
 					output = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
-			    } catch (Exception e) {
+				    
+
+				} catch (Exception e) {
 					response = "Error retrieving the data";
                 	e.printStackTrace();
 				}
@@ -94,7 +94,7 @@ public final class LMSController {
 		model.addAttribute("output", output);
 		model.addAttribute("Find_ad_account", Find_ad_account);
 		model.addAttribute("Get_user_org_access", Get_user_org_access);
-		model.addAttribute("action", "Making Server API request");
+		model.addAttribute("action", "Making Server API request...");
 		return "lms";
 	}
 

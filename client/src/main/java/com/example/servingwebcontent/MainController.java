@@ -35,11 +35,11 @@ public final class MainController {
      **/
 
     @GetMapping("/")
-	public String oauth(final Model model) {
+	public String oauth(final Model model) throws Exception {
 		String action = "Please Click login with linkedIn Button to generate access token!";
 		String response = "";
 		try {
-			response = Rest_Template.getForObject(SERVER_URL  + "token_introspection", String.class);
+			response = Rest_Template.getForObject(SERVER_URL  + "token", String.class);
             if(response != "Error Introspecting access token!")
             {
                 action = "Valid access token is ready to use!";
@@ -51,7 +51,7 @@ public final class MainController {
 		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("output", "Output");
 		model.addAttribute("action", action);
-		return "oauthli";
+		return "index";
 	}
 
     /**
@@ -60,7 +60,7 @@ public final class MainController {
      **/
 
     @PostMapping(path = "/", produces = { "application/json", "application/xml" }, consumes = { "application/x-www-form-urlencoded" })
-    public String postBody(@RequestBody final String data, final Model model) {
+    public String postBody(@RequestBody final String data, final Model model) throws Exception {
         String response = "";
         String action = "";
         if (data.equals("two_legged_auth=2+Legged+Auth")) {
@@ -69,33 +69,29 @@ public final class MainController {
                 response = Rest_Template.getForObject(SERVER_URL  + "two_legged_auth", String.class);
             } catch (Exception e) {
                 response = "Error retrieving the data";
-                e.printStackTrace();
             }
 
 		} else if (data.equals("profile=Get+Profile")) {
-            action = "Getting public profile";
+            action = "Getting public profile...";
             try {
                 response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
             } catch (Exception e) {
                 response = "Error retrieving the data";
-                e.printStackTrace();
             }
 
         } else if (data.equals("refresh_token=Refresh+Token")) {
-            action = "Refreshing token";
+            action = "Refreshing token...";
             try {
                 response = Rest_Template.getForObject(SERVER_URL + "refresh_token", String.class);
             } catch (Exception e) {
                 response = "Error retrieving the data";
-                e.printStackTrace();
             }
         } else {
-            action = "Performing token introspection";
+            action = "Performing token introspection...";
             try {  
             response = Rest_Template.getForObject(SERVER_URL + "token_introspection", String.class);
             } catch (Exception e) {
                 response = "Error retrieving the data";
-                e.printStackTrace();
             }
         }
 
