@@ -58,11 +58,8 @@ public final class LMSController {
 			case "token_introspection=Token+Introspection":
 				try {
 					output = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
-				    
-
-				} catch (Exception e) {
+			    } catch (Exception e) {
 					response = "Error retrieving the data";
-                	e.printStackTrace();
 				}
 			  break;
 
@@ -73,9 +70,8 @@ public final class LMSController {
 					output = "Find Ad Accounts";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
-                	e.printStackTrace();
-				}
-				break;
+                }
+			    break;
 
 			case "Get_user_org_access=Get+user+org+access":
 				try {
@@ -84,8 +80,7 @@ public final class LMSController {
 					output = "Get user org access";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
-                	e.printStackTrace();
-				}
+                }
 				break;
 			default: response = "No API calls made!";
 		}
@@ -97,7 +92,7 @@ public final class LMSController {
 		return "lms";
 	}
 
-	public Object parseJSON(final String response) throws Exception{
+	public Object parseJSON(final String response) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map<String, Object> jsonMap = objectMapper.readValue(response,
 				new TypeReference<Map<String, Object>>(){});
