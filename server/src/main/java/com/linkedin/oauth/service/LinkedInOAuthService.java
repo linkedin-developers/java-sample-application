@@ -21,7 +21,6 @@ import static com.linkedin.oauth.util.Constants.*;
  * LinkedIn 3-Legged OAuth Service
  */
 @SuppressWarnings({"AvoidStarImport"})
-@RestController
 public final class LinkedInOAuthService {
 
     private final String redirectUri;

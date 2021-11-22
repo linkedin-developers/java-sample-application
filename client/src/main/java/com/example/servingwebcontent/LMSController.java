@@ -50,14 +50,13 @@ public final class LMSController {
 	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
 	public String postBody(@RequestBody final String data, final Model model) throws Exception {
 		String response = "";
-		String output = "";
 		Object Find_Ad_Account = null;
 		Object Get_user_org_access = null;
         
 		switch (data) {
 			case "token_introspection=Token+Introspection":
 				try {
-					output = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
+					response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
 			    } catch (Exception e) {
 					response = "Error retrieving the data";
 				}
@@ -67,17 +66,15 @@ public final class LMSController {
 				try {
 					response = lmsTemplate.getForObject(SERVER_URL  + "Find_ad_account", String.class);
 				    Find_Ad_Account  = parseJSON(response);
-					output = "Find Ad Accounts";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
                 }
 			    break;
 
-			case "Get_user_org_access=Get+user+org+access":
+			case "Get_user_org_access=Find+Org+Access":
 				try {
 					response = lmsTemplate.getForObject(SERVER_URL  + "Get_user_org_access", String.class);
 				    Get_user_org_access = parseJSON(response);
-					output = "Get user org access";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
                 }
@@ -85,7 +82,7 @@ public final class LMSController {
 			default: response = "No API calls made!";
 		}
 
-		model.addAttribute("output", output);
+		model.addAttribute("output", response);
 		model.addAttribute("Find_ad_account", Find_Ad_Account);
 		model.addAttribute("Get_user_org_access", Get_user_org_access);
 		model.addAttribute("action", "Making Server API request...");

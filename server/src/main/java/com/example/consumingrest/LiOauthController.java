@@ -1,3 +1,8 @@
+/*
+* Getting Started with LinkedIn's OAuth APIs ,
+* Documentation: https://docs.microsoft.com/en-us/linkedin/?context=linkedin/context
+*/
+
 package com.example.consumingrest;
 
 import java.io.FileNotFoundException;
@@ -18,6 +23,7 @@ import com.linkedin.oauth.builder.ScopeBuilder;
 import com.linkedin.oauth.pojo.AccessToken;
 import com.linkedin.oauth.service.LinkedInOAuthService;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import static com.linkedin.oauth.util.Constants.*;
 
@@ -33,7 +39,9 @@ public final class LiOauthController {
     @Autowired
     private RestTemplate restTemplate;
 
-    //Define all inputs in the property file
+    /*
+     * Define all inputs in the property file
+     */
     public Properties prop = new Properties();
     public String propFileName = "config.properties";
     public String token = null;
@@ -42,6 +50,7 @@ public final class LiOauthController {
 
     /*
      * Make a Login request with LinkedIN Oauth API
+     * @return Redirects to the client UI after successful token creation
      */
 
     @RequestMapping(value = "/login")
@@ -69,7 +78,7 @@ public final class LiOauthController {
             .build();
 
         RedirectView redirectView = new RedirectView();
-        if (session.getAttribute("accessToken") != null) { 
+        if (session.getAttribute("accessToken") != null) {
             redirectView.setUrl(prop.getProperty("client_url"));
         } else if (code != null) {
             final AccessToken[] accessToken = {
@@ -87,13 +96,14 @@ public final class LiOauthController {
         } else {
             redirectView.setUrl(authorizationUrl);
         }
-    return redirectView;
+        return redirectView;
     }
-    
+
 
     /*
-    * Create 2 legged auth access token
-    */
+     * Create 2 legged auth access token
+     * @return Redirects to the client UI after successful token creation
+     */
     @RequestMapping(value = "/two_legged_auth")
     public RedirectView two_legged_auth(final HttpSession session) throws Exception {
         RedirectView redirectView = new RedirectView();
@@ -118,6 +128,7 @@ public final class LiOauthController {
 
     /*
      * Make a Token Introspection request with LinkedIN API
+     * @return check the Time to Live (TTL) and status (active/expired) for all token
      */
 
     @RequestMapping(value = "/token_introspection")
@@ -127,39 +138,40 @@ public final class LiOauthController {
             HttpEntity request = service.introspectToken(token);
             String response = restTemplate.postForObject(TOKEN_INTROSPECTION_URL, request, String.class);
             return response;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error Introspecting access token!";
+        } catch (HttpStatusCodeException e) {
+            return e.getResponseBodyAsString();
         }
     }
 
 
     /*
      * Make a Refresh Token request with LinkedIN API
+     * @param  Access Token generated access token must have refresh token
+     * @return get a new access token when your current access token expire
      */
 
     @RequestMapping(value = "/refresh_token")
     public String refresh_token() throws IOException {
-        if (refresh_token != null) {
+        try {
             HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
             String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
             return response;
-        } else {
-            return "Refresh token does not exist!";
+        } catch (HttpStatusCodeException e) {
+            return e.getResponseBodyAsString();
         }
     }
 
     /*
      * Make a Public profile request with LinkedIN API
+     * @return Public profile of user
      */
 
     @RequestMapping(value = "/profile")
     public String profile() throws Exception {
         try {
             return restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error getting public profile!";
+        } catch (HttpStatusCodeException e) {
+            return e.getResponseBodyAsString();
         }
     }
 }

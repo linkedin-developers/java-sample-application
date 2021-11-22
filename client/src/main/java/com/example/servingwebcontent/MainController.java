@@ -23,7 +23,6 @@ public final class MainController {
         return builder.build();
     }
 
-    @Autowired
     static final RestTemplate Rest_Template = new RestTemplate();
     
     @Value("${SERVER_URL}")

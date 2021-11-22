@@ -23,8 +23,6 @@ public class ConsumingRestApplicationTest {
 	public void contextLoads() {
 		assertThat(restTemplate).isNotNull();
 	}
-	//.andExpect(content().json("{'message':'ok'}"));
-	//content().contentType(contentType)
 
 }
 

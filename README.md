@@ -1,28 +1,31 @@
 # java-oauth-sample-application
-Sample Application for LinkedIn's OAuth APIs
+Sample Application for LinkedIn OAuth APIs
 
 # Features
-Rest API calls to OAuth and LMS functions. Separate Client and Server components to manage API calls with LinkedIn's API endpoints. Server Creates and stores the access token, Makes API calls with payload on a request from the client.
+Rest API calls to Oauth and LMS functions. Separate Client and Server components to manage API calls with LinkedIn's API endpoints. Server Creates and stores the access token, Makes API calls with payload on a request from the client.
 
 # The Sample Application uses the below technologies:
 - Spring Boot: Used as web server framework
-- LinkedIn OAuth 2.0: Authenticate with LinkedIn's APIs
+- LinkedIn OAuth 2.0: Authenticate with LinkedIn APIs
 - Maven
 - Java 7+
 
 # Create a LinkedIn Developer Application
-Before you can configure and run sample application, you need to have an application registered in LinkedIn Developer Portal ( https://developer.linkedin.com/ )
-Once you have your developer application, please obtain the Client ID and Client Secret.
+Before you can configure and run this application, you need to have an application registered in LinkedIn Developer Portal. Once you have your application, please obtain the Client ID and Client Secret.
 
 Add http://localhost:8080/login to the Authorized Redirect URLs under the Authentication section.
 
+# Configure MAVEN
+To configure the application build download and install MAVEN using this guide :- https://maven.apache.org/install.html
 
 # Configure the Application
 
-Configure Client App: Edit /server/src/main/resources/application.properties with your custom values if you want to use another server link or port.
+Configure Client App: 
+Edit /server/src/main/resources/application.properties with your custom values if you want to use another server link or port.
 
 
-Configure Server App: Edit /server/src/main/resources/config.properties with your client credentials
+Configure Server App:
+Edit /server/src/main/resources/config.properties with your client credentials
 
 # Start the application
 
