@@ -1,4 +1,4 @@
-package com.example.servingwebcontent;
+package com.linkedIn.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,18 +13,18 @@ import java.util.Map;
 
 
 @Controller
-public final class LMSController {
+public final class LinkedInMarketingController {
 
 	private RestTemplate lmsTemplate = new RestTemplate();
 
 	@Value("${SERVER_URL}")
 	private String SERVER_URL;
-    
+
 	/**
 	 * Serves a html webpage with operations related to OAuth
 	 **/
 
-	@GetMapping("/lms")
+	@GetMapping("/Marketing")
 	public String oauth(final Model model) throws Exception {
 		String action = "Please Click login with linkedIn Button to generate access token!";
 		String response = "";
@@ -39,7 +39,7 @@ public final class LMSController {
 		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("output", "Output");
 		model.addAttribute("action", action);
-		return "lms";
+		return "marketingtemplate";
 	}
 
 	/**
@@ -47,12 +47,12 @@ public final class LMSController {
 	 * To return a response and updates it on UI
 	 **/
 
-	@PostMapping(path = "/lms", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
+	@PostMapping(path = "/Marketing", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
 	public String postBody(@RequestBody final String data, final Model model) throws Exception {
 		String response = "";
 		Object Find_Ad_Account = null;
 		Object Get_user_org_access = null;
-        
+
 		switch (data) {
 			case "token_introspection=Token+Introspection":
 				try {
@@ -86,7 +86,7 @@ public final class LMSController {
 		model.addAttribute("Find_ad_account", Find_Ad_Account);
 		model.addAttribute("Get_user_org_access", Get_user_org_access);
 		model.addAttribute("action", "Making Server API request...");
-		return "lms";
+		return "marketingtemplate";
 	}
 
 	public Object parseJSON(final String response) throws Exception {

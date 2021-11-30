@@ -1,4 +1,4 @@
-package com.example.servingwebcontent;
+package com.linkedIn.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +24,7 @@ public final class MainController {
     }
 
     static final RestTemplate Rest_Template = new RestTemplate();
-    
+
     @Value("${SERVER_URL}")
 	private String SERVER_URL;
 
@@ -45,7 +45,7 @@ public final class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-       
+
 		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("output", "Output");
 		model.addAttribute("action", action);
@@ -86,7 +86,7 @@ public final class MainController {
             }
         } else {
             action = "Performing token introspection...";
-            try {  
+            try {
             response = Rest_Template.getForObject(SERVER_URL + "token_introspection", String.class);
             } catch (Exception e) {
                 response = "Error retrieving the data";

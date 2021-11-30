@@ -1,12 +1,12 @@
 /*
 * Getting Started with LinkedIn's Marketing APIs ,
-* Documentation: https://docs.microsoft.com/en-us/linkedin/marketing/getting-started 
+* Documentation: https://docs.microsoft.com/en-us/linkedin/marketing/getting-started
 * The additional scopes required to use these functions are:
 * 'rw_ads, rw_organization_admin'
 * You can invoke these functions independently with valid access token string as a parameter.
 * More Docs: https://docs.microsoft.com/en-us/linkedin/marketing/integrations/ads/account-structure/create-and-manage-account-users
 */
-package com.example.consumingrest;
+package com.example.api;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +17,12 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 
 @RestController
-public final class LMSController {
+public final class LinkedInMarketingController {
 
     private RestTemplate lmsTemplate = new RestTemplate();
     public String token;
-
     /*
-     * Find Ad Accounts by Authenticated User or Verifying Ad Accounts Access 
+     * Find Ad Accounts by Authenticated User or Verifying Ad Accounts Access
      * @return All Ad Accounts that an authenticated user has access to can be retrieved with the following endpoint.
      */
     @RequestMapping("/Find_ad_account")
@@ -38,8 +37,8 @@ public final class LMSController {
 
     }
 
-    /* 
-     * Find Ad Account roles of Authenticated User 
+    /*
+     * Find Ad Account roles of Authenticated User
      * @return fetch all users associated with specified Ad Accounts
      */
     @RequestMapping("/Get_user_org_access")
@@ -54,8 +53,8 @@ public final class LMSController {
 
     }
 
-    /* 
-     * Fetch Ad Account by ID 
+    /*
+     * Fetch Ad Account by ID
      * @return Individual Ad Account Details
      */
     @RequestMapping(value = "/Fetch_ad_account")

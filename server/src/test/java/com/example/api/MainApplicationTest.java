@@ -2,7 +2,7 @@
  * Test cases for Java Sample Application.
  */
 
-package com.example.consumingrest;
+package com.example.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @SpringBootTest
-public class ConsumingRestApplicationTest {
+public class MainApplicationTest {
 
 	@Autowired
 	private RestTemplate restTemplate;

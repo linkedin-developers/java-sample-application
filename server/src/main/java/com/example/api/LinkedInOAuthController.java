@@ -3,7 +3,7 @@
 * Documentation: https://docs.microsoft.com/en-us/linkedin/?context=linkedin/context
 */
 
-package com.example.consumingrest;
+package com.example.api;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import static com.linkedin.oauth.util.Constants.*;
 
 
 @RestController
-public final class LiOauthController {
+public final class LinkedInOAuthController {
 
     @Bean
     public RestTemplate restTemplate(final RestTemplateBuilder builder) {
@@ -56,7 +56,7 @@ public final class LiOauthController {
     @RequestMapping(value = "/login")
     public RedirectView oauth(@RequestParam(name = "code", required = false) final String code, final HttpSession session) throws Exception {
 
-        InputStream inputStream = LiOauthController.class.getClassLoader().getResourceAsStream(propFileName);
+        InputStream inputStream = LinkedInOAuthController.class.getClassLoader().getResourceAsStream(propFileName);
         if (inputStream != null) {
             prop.load(inputStream);
         } else {
@@ -107,6 +107,15 @@ public final class LiOauthController {
     @RequestMapping(value = "/two_legged_auth")
     public RedirectView two_legged_auth(final HttpSession session) throws Exception {
         RedirectView redirectView = new RedirectView();
+        // Construct the LinkedInOAuthService instance for use
+        service = new LinkedInOAuthService.LinkedInOAuthServiceBuilder()
+            .apiKey(prop.getProperty("clientId"))
+            .apiSecret(prop.getProperty("clientSecret"))
+            .defaultScope(new ScopeBuilder(prop.getProperty("scope").split(",")).build())
+            .callback(prop.getProperty("redirectUri"))
+            .build();
+
+        session.setAttribute("service", service);
         final AccessToken[] accessToken = {
             new AccessToken()
         };

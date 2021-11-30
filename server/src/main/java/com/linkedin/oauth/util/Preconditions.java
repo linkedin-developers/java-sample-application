@@ -32,20 +32,15 @@ public abstract class Preconditions {
     }
 
     public static boolean hasText(final String str) {
-        if (str == null || str.isEmpty()) {
+        if(str.trim().isEmpty())
+        {
             return false;
         }
-        final int strLen = str.length();
-        for (int i = 0; i < strLen; i++) {
-            if (!Character.isWhitespace(str.charAt(i))) {
-                return true;
-            }
-        }
-        return false;
+        return true; 
     }
 
-    private static void check(final boolean requirements, final String error) {
-        if (!requirements) {
+    private static void check(final boolean requirement, final String error) {
+        if (!requirement) {
             throw new IllegalArgumentException(hasText(error) ? error : DEFAULT_MESSAGE);
         }
     }

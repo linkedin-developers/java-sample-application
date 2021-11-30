@@ -1,4 +1,4 @@
-package com.example.servingwebcontent;
+package com.linkedIn.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public class ServingWebContentApplication {
+public class Example {
 
-	public ServingWebContentApplication() { }
+	public Example() { }
 	public static void main(final String[] args) {
-		SpringApplication.run(ServingWebContentApplication.class, args);
+		SpringApplication.run(Example.class, args);
 	}
 
 }
