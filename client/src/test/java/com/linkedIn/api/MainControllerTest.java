@@ -2,7 +2,7 @@
  * Test cases for Java Sample Application.
  */
 
-package com.linkedln.api;
+package com.linkedIn.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
