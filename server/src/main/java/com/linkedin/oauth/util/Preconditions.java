@@ -32,8 +32,7 @@ public abstract class Preconditions {
     }
 
     public static boolean hasText(final String str) {
-        if(str.trim().isEmpty())
-        {
+        if (str.trim().isEmpty()) {
             return false;
         }
         return true; 
