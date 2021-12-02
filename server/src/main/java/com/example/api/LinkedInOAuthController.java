@@ -47,7 +47,8 @@ public final class LinkedInOAuthController {
     public String token = null;
     public String refresh_token = null;
     public LinkedInOAuthService service;
-
+    public HttpSession session;
+    //session.getCookie();
     /*
      * Make a Login request with LinkedIN Oauth API
      * @return Redirects to the client UI after successful token creation

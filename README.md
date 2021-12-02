@@ -5,7 +5,7 @@ Sample Application for LinkedIn OAuth APIs
 Rest API calls to Oauth and LMS functions. Separate Client and Server components to manage API calls with LinkedIn's API endpoints. Server Creates and stores the access token, Makes API calls with payload on a request from the client.
 
 # The Sample Application uses the below technologies:
-- Spring Boot: Used as web server framework
+- Spring Boot: Used as web server framework [ https://spring.io/projects/spring-boot ]
 - LinkedIn OAuth 2.0: Authenticate with LinkedIn APIs
 - Maven
 - Java 7+
