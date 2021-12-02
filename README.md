@@ -50,4 +50,16 @@ Navigate into the client folder
 2. Run mvn spring-boot:run (To run spring-boot server)
 The client will be running on http://localhost:8989/
 
+# List of dependencies
+| Component Name                                                                                                                                                                  | License    | Linked | Modified |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ | -------- |
+| [org.springframework.boot:spring-boot-starter-parent:2.5.2](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent/2.5.2)                       | Apache 2.0 | Static | No       |
+| [org.springframework.boot:spring-boot-starter-thymeleaf:2.2.2.RELEASE](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf/2.2.2.RELEASE) | Apache 2.0 | Static | No       |
+| [org.springframework.boot:spring-boot-devtools:2.6.0                ](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools/2.6.0)                   | Apache 2.0 | Static | No       |
+| [com.fasterxml.jackson.core:jackson-databind:2.13.0](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.13.0)                                     | Apache 2.0 | Static | No       |
+| [com.fasterxml.jackson.core:jackson-core:2.13.0 ](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.13.0)                                            | Apache 2.0 | Static | No       |
+| [org.springframework.boot:spring-boot-starter-web:2.5.2](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/2.5.2)                             | Apache 2.0 | Static | No       |
+| [org.springframework.boot:spring-boot-starter-test:2.6.0 ](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test/2.6.0)                          | Apache 2.0 | Static | No       |
+| [org.springframework:spring-core:5.3.13](https://mvnrepository.com/artifact/org.springframework/spring-core/5.3.13)                                                             | Apache 2.0 | Static | No       |
+
 
