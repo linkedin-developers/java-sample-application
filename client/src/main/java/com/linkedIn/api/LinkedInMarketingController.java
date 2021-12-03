@@ -29,10 +29,10 @@ public final class LinkedInMarketingController {
 		String action = "Please Click login with linkedIn Button to generate access token!";
 		String response = "";
 		try {
-			response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
-		    if (response != "Error Introspecting access token!") {
-                action = "Valid access token is ready to use!";
-            }
+			response = lmsTemplate.getForObject(SERVER_URL + "token_introspection", String.class);
+			if (response != "Error Introspecting access token!") {
+				action = "Valid access token is ready to use!";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public final class LinkedInMarketingController {
 	 * To return a response and updates it on UI
 	 **/
 
-	@PostMapping(path = "/Marketing", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
+	@PostMapping(path = "/Marketing")
 	public String postBody(@RequestBody final String data, final Model model) throws Exception {
 		String response = "";
 		Object Find_Ad_Account = null;
@@ -56,30 +56,33 @@ public final class LinkedInMarketingController {
 		switch (data) {
 			case "token_introspection=Token+Introspection":
 				try {
-					response = lmsTemplate.getForObject(SERVER_URL  + "token_introspection", String.class);
-			    } catch (Exception e) {
+					response = lmsTemplate.getForObject(SERVER_URL + "token_introspection", String.class);
+				} catch (Exception e) {
 					response = "Error retrieving the data";
 				}
-			  break;
+				break;
 
 			case "Find_ad_account=Find+Ad+Accounts":
 				try {
-					response = lmsTemplate.getForObject(SERVER_URL  + "Find_ad_account", String.class);
-				    Find_Ad_Account  = parseJSON(response);
+					response = lmsTemplate.getForObject(SERVER_URL + "Find_ad_account", String.class);
+					Find_Ad_Account = parseJSON(response);
+					response = "Find Ad Accounts by Authenticated User:- ";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
-                }
-			    break;
+				}
+				break;
 
 			case "Get_user_org_access=Find+Org+Access":
 				try {
-					response = lmsTemplate.getForObject(SERVER_URL  + "Get_user_org_access", String.class);
-				    Get_user_org_access = parseJSON(response);
+					response = lmsTemplate.getForObject(SERVER_URL + "Get_user_org_access", String.class);
+					Get_user_org_access = parseJSON(response);
+					response = "Find Ad Account roles of Authenticated User:- ";
 				} catch (Exception e) {
 					response = "Error retrieving the data";
-                }
+				}
 				break;
-			default: response = "No API calls made!";
+			default:
+				response = "No API calls made!";
 		}
 
 		model.addAttribute("output", response);
@@ -91,8 +94,8 @@ public final class LinkedInMarketingController {
 
 	public Object parseJSON(final String response) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, Object> jsonMap = objectMapper.readValue(response,
-				new TypeReference<Map<String, Object>>() { } );
+		Map < String, Object > jsonMap = objectMapper.readValue(response,
+				new TypeReference < Map < String, Object >> () {});
 		Object elements = jsonMap.get("elements");
 		return elements;
 	}
