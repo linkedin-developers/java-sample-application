@@ -1,65 +1,85 @@
-# java-oauth-sample-application
-Sample Application for LinkedIn OAuth APIs
+# Configure a Sample Application for LinkedIn OAuth APIs
 
-# Features
-Rest API calls to Oauth and LMS functions. Separate Client and Server components to manage API calls with LinkedIn's API endpoints. Server Creates and stores the access token, Makes API calls with payload on a request from the client.
+## Features
 
-# The Sample Application uses the below technologies:
-- Spring Boot: Used as web server framework [ https://spring.io/projects/spring-boot ]
-- LinkedIn OAuth 2.0: Authenticate with LinkedIn APIs
-- Maven
-- Java 7+
+A sample application can be used by the developers to download and try out LinkedIn's APIs. This application demonstrates the best practices in implementing LinkedIn's Externalized OAuth APIs.
 
-# Create a LinkedIn Developer Application
-Before you can configure and run this application, you need to have an application registered in LinkedIn Developer Portal. 
-Link: https://developer.linkedin.com/
-Once you have your application, please obtain the Client ID and Client Secret.
+The application contains client and server components to manage API calls with LinkedIn's API endpoints. The server creates an access token, stores the access token, and invokes API calls with the payload upon request from the client.
+The sample application uses the following technologies:
 
+* Spring Boot: Used as web server framework [<https://spring.io/projects/spring-boot>]
+* LinkedIn OAuth 2.0: Authenticate with LinkedIn APIs
+* Maven
+* Java 7+
 
-Add http://localhost:8080/login to the Authorized Redirect URLs under the Authentication section.
+## Prerequisites
 
-# Configure MAVEN
-To configure the application build download and install MAVEN using this guide :- https://maven.apache.org/install.html
+* Ensure that you have an application registered in [LinkedIn Developer Portal](https://developer.linkedin.com/).
+Once you have your application, note down the Client ID and Client Secret
+* Add <http://localhost:8080/login> to the Authorized Redirect URLs under the **Authentication** section
+* Configure the application build by installing MAVEN using [Installing Apache Maven](https://maven.apache.org/install.html)
 
-# Configure the Application
+## Configure the application
 
-Configure Client App:
-Edit /server/src/main/resources/application.properties with your custom values if you want to edit server link or port,
-server.port = <replace_with_port_no>
-SERVER_URL = <replace_with_server_url>
+**Configure the client app:**
 
-Configure Server App:
-Edit /server/src/main/resources/config.properties with your client credentials,
-clientId=<replace_with_client_id>
-clientSecret=<replace_with_client_secret>
-redirectUri=<replace_with_redirect_url_set_in_developer_portal>
-scope=<replace_with_api_scope>
-client_url=<replace_with_client_url>
+ 1. Navigate to the **application.properties** file. You can find this file under: **/client/src/main/resources/application.properties**
+ 1. To edit server link or port with custom values modify the following values:
 
-# Start the application
+    > server.port = <replace_with_required_port_no>
 
-To start server:
-Navigate into the server folder
-1. Run mvn install (To install all dependencies)
-2. Run mvn spring-boot:run (To run spring-boot server)
-The server will be running on http://localhost:8080/
+    > SERVER_URL = <replace_with_required_server_url>
 
-To start client:
-Navigate into the client folder
-1. Run mvn install (To install all dependencies)
-2. Run mvn spring-boot:run (To run spring-boot server)
-The client will be running on http://localhost:8989/
+ 1. Save the changes.
 
-# List of dependencies
-| Component Name                                                                                                                                                                  | License    | Linked | Modified |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ | -------- |
-| [org.springframework.boot:spring-boot-starter-parent:2.5.2](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent/2.5.2)                       | Apache 2.0 | Static | No       |
-| [org.springframework.boot:spring-boot-starter-thymeleaf:2.2.2.RELEASE](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf/2.2.2.RELEASE) | Apache 2.0 | Static | No       |
-| [org.springframework.boot:spring-boot-devtools:2.6.0                ](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools/2.6.0)                   | Apache 2.0 | Static | No       |
-| [com.fasterxml.jackson.core:jackson-databind:2.13.0](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.13.0)                                     | Apache 2.0 | Static | No       |
-| [com.fasterxml.jackson.core:jackson-core:2.13.0 ](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.13.0)                                            | Apache 2.0 | Static | No       |
-| [org.springframework.boot:spring-boot-starter-web:2.5.2](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/2.5.2)                             | Apache 2.0 | Static | No       |
-| [org.springframework.boot:spring-boot-starter-test:2.6.0 ](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test/2.6.0)                          | Apache 2.0 | Static | No       |
-| [org.springframework:spring-core:5.3.13](https://mvnrepository.com/artifact/org.springframework/spring-core/5.3.13)                                                             | Apache 2.0 | Static | No       |
+**Configure the server app:**
 
+ 1. Navigate to the **config.properties** file. You can find this file under: **/server/src/main/resources/config.properties**
+ 2. Edit the following properties in the file with your client credentials:
 
+    > clientId = <replace_with_client_id>
+
+    > clientSecret = <replace_with_client_secret>
+
+    > redirectUri = <replace_with_redirect_url_set_in_developer_portal>
+
+    > scope = <replace_with_api_scope>
+    client_url = <replace_with_client_url>
+
+ 3. Save the changes.
+  
+## Start the application
+
+To start the server:
+
+1. Navigate to the server folder.
+2. Open the terminal and run the following command to install dependencies:
+`mvn install`
+3. Execute the following command to run the spring-boot server:
+`mvn spring-boot:run`
+
+> **Note:** The server will be running on <http://localhost:8080/>
+
+To start the client:
+
+1. Navigate to the client folder.
+2. Open the terminal and run the following command to install dependencies:
+ `mvn install`
+3. Execute the following command to run the spring-boot server:
+`mvn spring-boot:run`
+
+> **Note**: The client will be running on <http://localhost:8989/>
+
+## List of dependencies
+
+|Component Name |License |Linked |Modified |
+|---------------|--------|--------|----------|
+|[boot:spring-boot-starter-parent:2.5.2](<https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent/2.5.2>) |Apache 2.0 |Static |No |
+|[boot:spring-boot-starter-parent:2.5.2](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent/2.5.2) |Apache 2.0 |Static |No |
+|[org.springframework.boot:spring-boot-starter-thymeleaf:2.2.2.RELEASE](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf/2.2.2.RELEASE) |Apache 2.0 |Static |No |
+|[org.springframework.boot:spring-boot-devtools:2.6.0](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools/2.6.0) |Apache 2.0 |Static |No |
+|[com.fasterxml.jackson.core:jackson-databind:2.13.0](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.13.0)                                     |Apache 2.0 |Static |No |
+|[com.fasterxml.jackson.core:jackson-core:2.13.0](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.13.0) |Apache 2.0 |Static |No |
+|[org.springframework.boot:spring-boot-starter-web:2.5.2](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/2.5.2) |Apache 2.0 |Static |No |
+| [org.springframework.boot:spring-boot-starter-test:2.6.0](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test/2.6.0) |Apache 2.0 |Static |No |
+|[org.springframework:spring-core:5.3.13](https://mvnrepository.com/artifact/org.springframework/spring-core/5.3.13) |Apache 2.0 |Static |No |
