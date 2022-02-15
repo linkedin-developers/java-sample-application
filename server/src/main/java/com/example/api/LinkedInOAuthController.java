@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Random;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -44,25 +43,18 @@ public final class LinkedInOAuthController {
      */
     public Properties prop = new Properties();
     public String propFileName = "config.properties";
-    public String token = null;
+    public static String token = null;
     public String refresh_token = null;
     public LinkedInOAuthService service;
-    public HttpSession session;
-    //session.getCookie();
     /*
      * Make a Login request with LinkedIN Oauth API
      * @return Redirects to the client UI after successful token creation
      */
 
     @RequestMapping(value = "/login")
-    public RedirectView oauth(@RequestParam(name = "code", required = false) final String code, final HttpSession session) throws Exception {
+    public RedirectView oauth(@RequestParam(name = "code", required = false) final String code) throws Exception {
 
-        InputStream inputStream = LinkedInOAuthController.class.getClassLoader().getResourceAsStream(propFileName);
-        if (inputStream != null) {
-            prop.load(inputStream);
-        } else {
-            throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-        }
+        loadProperty();
 
         // Construct the LinkedInOAuthService instance for use
         service = new LinkedInOAuthService.LinkedInOAuthServiceBuilder()
@@ -72,24 +64,21 @@ public final class LinkedInOAuthController {
             .callback(prop.getProperty("redirectUri"))
             .build();
 
-        session.setAttribute("service", service);
         final String secretState = "secret" + new Random().nextInt(999_999);
         final String authorizationUrl = service.createAuthorizationUrlBuilder()
             .state(secretState)
             .build();
 
         RedirectView redirectView = new RedirectView();
-        if (session.getAttribute("accessToken") != null) {
-            redirectView.setUrl(prop.getProperty("client_url"));
-        } else if (code != null) {
+
+        if (code != null) {
             final AccessToken[] accessToken = {
                 new AccessToken()
             };
             HttpEntity request = service.getAccessToken3Legged(code);
             String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
             accessToken[0] = service.convertJsonTokenToPojo(response);
-            session.setAttribute("accessToken", accessToken);
-            session.setAttribute("tokenString", accessToken[0].getAccessToken());
+
             prop.setProperty("token", accessToken[0].getAccessToken());
             token = accessToken[0].getAccessToken();
             refresh_token = accessToken[0].getRefreshToken();
@@ -105,8 +94,10 @@ public final class LinkedInOAuthController {
      * Create 2 legged auth access token
      * @return Redirects to the client UI after successful token creation
      */
-    @RequestMapping(value = "/two_legged_auth")
-    public RedirectView two_legged_auth(final HttpSession session) throws Exception {
+    @RequestMapping(value = "/twoLeggedAuth")
+    public RedirectView two_legged_auth() throws Exception {
+        loadProperty();
+
         RedirectView redirectView = new RedirectView();
         // Construct the LinkedInOAuthService instance for use
         service = new LinkedInOAuthService.LinkedInOAuthServiceBuilder()
@@ -116,7 +107,6 @@ public final class LinkedInOAuthController {
             .callback(prop.getProperty("redirectUri"))
             .build();
 
-        session.setAttribute("service", service);
         final AccessToken[] accessToken = {
             new AccessToken()
         };
@@ -124,11 +114,8 @@ public final class LinkedInOAuthController {
             HttpEntity request = service.getAccessToken2Legged();
             String response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
             accessToken[0] = service.convertJsonTokenToPojo(response);
-            session.setAttribute("accessToken", accessToken);
-            session.setAttribute("tokenString", accessToken[0].getAccessToken());
             prop.setProperty("token", accessToken[0].getAccessToken());
             token = accessToken[0].getAccessToken();
-            refresh_token = accessToken[0].getRefreshToken();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,15 +128,18 @@ public final class LinkedInOAuthController {
      * @return check the Time to Live (TTL) and status (active/expired) for all token
      */
 
-    @RequestMapping(value = "/token_introspection")
+    @RequestMapping(value = "/tokenIntrospection")
     public String token_introspection() throws Exception {
-
-        try {
-            HttpEntity request = service.introspectToken(token);
-            String response = restTemplate.postForObject(TOKEN_INTROSPECTION_URL, request, String.class);
-            return response;
-        } catch (HttpStatusCodeException e) {
-            return e.getResponseBodyAsString();
+        if (service != null) {
+            try {
+                HttpEntity request = service.introspectToken(token);
+                String response = restTemplate.postForObject(TOKEN_INTROSPECTION_URL, request, String.class);
+                return response;
+            } catch (HttpStatusCodeException e) {
+                return e.getResponseBodyAsString();
+            }
+        } else {
+            return "Error introspecting token service is not initiated";
         }
     }
 
@@ -160,7 +150,7 @@ public final class LinkedInOAuthController {
      * @return get a new access token when your current access token expire
      */
 
-    @RequestMapping(value = "/refresh_token")
+    @RequestMapping(value = "/refreshToken")
     public String refresh_token() throws IOException {
         try {
             HttpEntity request = service.getAccessTokenFromRefreshToken(refresh_token);
@@ -182,6 +172,15 @@ public final class LinkedInOAuthController {
             return restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
         } catch (HttpStatusCodeException e) {
             return e.getResponseBodyAsString();
+        }
+    }
+
+    private void loadProperty() throws IOException {
+        InputStream inputStream = LinkedInOAuthController.class.getClassLoader().getResourceAsStream(propFileName);
+        if (inputStream != null) {
+            prop.load(inputStream);
+        } else {
+            throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
         }
     }
 }
