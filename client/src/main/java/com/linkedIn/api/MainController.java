@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
-
+import static com.linkedIn.api.Constants.*;
 /*
 * Main controller called by spring-boot to map URL's
  */
@@ -27,76 +27,79 @@ public final class MainController {
     @Value("${SERVER_URL}")
 	private String SERVER_URL;
 
-
     /**
      * Serves a html webpage with operations related to OAuth
-     **/
-
+     *
+     * @param model Spring Boot Model
+     * @return the html page to render
+     */
     @GetMapping("/")
-	public String oauth(final Model model) throws Exception {
+	public String oauth(final Model model) {
 		String action = "Start with LinkedIn's OAuth API operations...";
 		String response, output = "";
 		try {
-			response = Rest_Template.getForObject(SERVER_URL  + "tokenIntrospection", String.class);
-            if (!response.contains("rror")) {
-                action = output = "Access Token is ready to use!";
+			response = Rest_Template.getForObject(SERVER_URL  + TOKEN_INTROSPECTION_ENDPOINT, String.class);
+            if (!response.toLowerCase().contains("error")) {
+                action = output = TOKEN_EXISTS_MESSAGE;
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		model.addAttribute("auth_url", SERVER_URL + "login");
+		model.addAttribute("auth_url", SERVER_URL + THREE_LEGGED_TOKEN_GEN_ENDPOINT);
 		model.addAttribute("output", output);
 		model.addAttribute("action", action);
-		return "index";
+		return OAUTH_PAGE;
 	}
 
     /**
      * Handles the post requests of Html page, calls the API endpoints of server URL.
-     * To return a response and updates it on UI
-     **/
-
+     *
+     * @param data string data passed from the UI compoment
+     * @param model Spring Boot Model
+     * @return a page to render on UI
+     */
     @PostMapping(path = "/", produces = { "application/json", "application/xml" }, consumes = { "application/x-www-form-urlencoded" })
-    public String postBody(@RequestBody final String data, final Model model) throws Exception {
+    public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
         String action = "";
-        if (data.equals("two_legged_auth=2+Legged+OAuth")) {
-            action = "Generating 2-legged auth access token...";
+        if (data.equals(CASE_TWO_LEGGED_TOKEN_GEN)) {
+            action = ACTION_2_LEGGED_TOKEN_GEN;
             try {
-                Rest_Template.getForObject(SERVER_URL  + "twoLeggedAuth", String.class);
-                response = "2-Legged OAuth token successfully generated via client credentials.";
+                Rest_Template.getForObject(SERVER_URL  + TWO_LEGGED_TOKEN_GEN_ENDPOINT, String.class);
+                response = TWO_LEGGED_TOKEN_GEN_SUCCESS_MESSAGE;
             } catch (Exception e) {
-                response = "Error retrieving the data";
+                response = GENERIC_ERROR_MESSAGE;
             }
 
-		} else if (data.equals("profile=Get+Profile")) {
-            action = "Getting public profile...";
+		} else if (data.equals(CASE_GET_PROFILE)) {
+            action = ACTION_GET_PROFILE;
             try {
-                response = Rest_Template.getForObject(SERVER_URL + "profile", String.class);
+                response = Rest_Template.getForObject(SERVER_URL + PROFILE_ENDPOINT, String.class);
             } catch (Exception e) {
-                response = "Error retrieving the data";
+                response = GENERIC_ERROR_MESSAGE;
             }
 
-        } else if (data.equals("refresh_token=Use+Refresh+Token")) {
-            action = "Refreshing token...";
+        } else if (data.equals(CASE_USE_REFRESH_TOKEN)) {
+            action = ACTION_USE_REFRESH_TOKEN;
             try {
-                response = Rest_Template.getForObject(SERVER_URL + "refreshToken", String.class);
+                response = Rest_Template.getForObject(SERVER_URL + USE_REFRESH_TOKEN_ENDPOINT, String.class);
             } catch (Exception e) {
-                response = "Error retrieving the data";
+                response = GENERIC_ERROR_MESSAGE;
             }
         } else {
-            action = "Performing token introspection...";
+            action = ACTION_TOKEN_INTROSPECTION;
             try {
-            response = Rest_Template.getForObject(SERVER_URL + "tokenIntrospection", String.class);
+            response = Rest_Template.getForObject(SERVER_URL + TOKEN_INTROSPECTION_ENDPOINT, String.class);
             } catch (Exception e) {
-                response = "Error retrieving the data";
+                response = GENERIC_ERROR_MESSAGE;
             }
         }
 
         model.addAttribute("output", response);
         model.addAttribute("auth_url", SERVER_URL + "login");
         model.addAttribute("action", action);
-        return "index";
+        return OAUTH_PAGE;
     }
 
 }

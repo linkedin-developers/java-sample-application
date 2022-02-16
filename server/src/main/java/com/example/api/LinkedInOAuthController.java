@@ -25,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import static com.linkedin.oauth.util.Constants.*;
+import static com.example.api.Constants.*;
 
 
 @RestController
@@ -46,11 +47,14 @@ public final class LinkedInOAuthController {
     public static String token = null;
     public String refresh_token = null;
     public LinkedInOAuthService service;
-    /*
-     * Make a Login request with LinkedIN Oauth API
-     * @return Redirects to the client UI after successful token creation
-     */
 
+    /**
+     * Make a Login request with LinkedIN Oauth API
+     *
+     * @param code optional Authorization code
+     * @return Redirects to the client UI after successful token creation
+     *
+     */
     @RequestMapping(value = "/login")
     public RedirectView oauth(@RequestParam(name = "code", required = false) final String code) throws Exception {
 
@@ -71,7 +75,7 @@ public final class LinkedInOAuthController {
 
         RedirectView redirectView = new RedirectView();
 
-        if (code != null) {
+        if (code != null && !code.isEmpty()) {
             final AccessToken[] accessToken = {
                 new AccessToken()
             };
@@ -90,8 +94,9 @@ public final class LinkedInOAuthController {
     }
 
 
-    /*
+    /**
      * Create 2 legged auth access token
+     *
      * @return Redirects to the client UI after successful token creation
      */
     @RequestMapping(value = "/twoLeggedAuth")
@@ -123,7 +128,7 @@ public final class LinkedInOAuthController {
         return redirectView;
     }
 
-    /*
+    /**
      * Make a Token Introspection request with LinkedIN API
      * @return check the Time to Live (TTL) and status (active/expired) for all token
      */
@@ -139,14 +144,13 @@ public final class LinkedInOAuthController {
                 return e.getResponseBodyAsString();
             }
         } else {
-            return "Error introspecting token service is not initiated";
+            return TOKEN_INTROSPECTION_ERROR_MESSAGE;
         }
     }
 
 
-    /*
+    /**
      * Make a Refresh Token request with LinkedIN API
-     * @param  Access Token generated access token must have refresh token
      * @return get a new access token when your current access token expire
      */
 
@@ -161,7 +165,7 @@ public final class LinkedInOAuthController {
         }
     }
 
-    /*
+    /**
      * Make a Public profile request with LinkedIN API
      * @return Public profile of user
      */
@@ -169,7 +173,7 @@ public final class LinkedInOAuthController {
     @RequestMapping(value = "/profile")
     public String profile() throws Exception {
         try {
-            return restTemplate.getForObject("https://api.linkedin.com/v2/me?oauth2_access_token=" + token, String.class);
+            return restTemplate.getForObject(LI_ME_ENDPOINT + token, String.class);
         } catch (HttpStatusCodeException e) {
             return e.getResponseBodyAsString();
         }

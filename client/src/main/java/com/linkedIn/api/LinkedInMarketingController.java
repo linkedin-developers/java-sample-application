@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
+import static com.linkedIn.api.Constants.*;
 
 
 @Controller
@@ -21,17 +22,20 @@ public final class LinkedInMarketingController {
 	private String SERVER_URL;
 
 	/**
+	 *
 	 * Serves a html webpage with operations related to OAuth
-	 **/
-
+	 *
+	 * @param model Spring Boot Model
+	 * @return HTML page to render
+	 */
 	@GetMapping("/marketing")
-	public String oauth(final Model model) throws Exception {
+	public String oauth(final Model model) {
 		String action = "Start with LinkedIn's LMS APIs!";
 		String response, output = "";
 		try {
-			response = lmsTemplate.getForObject(SERVER_URL + "tokenIntrospection", String.class);
-			if (!response.contains("rror")) {
-				action = output = "Access token is ready to use!";
+			response = lmsTemplate.getForObject(SERVER_URL + TOKEN_INTROSPECTION_ENDPOINT, String.class);
+			if (!response.toLowerCase().contains("error")) {
+				action = output = TOKEN_EXISTS_MESSAGE;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,58 +43,59 @@ public final class LinkedInMarketingController {
 		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("output", output);
 		model.addAttribute("action", action);
-		return "marketingtemplate";
+		return LMS_PAGE;
 	}
 
 	/**
 	 * Handles the post requests of Html page, calls the API endpoints of server URL.
-	 * To return a response and updates it on UI
-	 **/
-
+	 * @param data string data from the UI component
+	 * @param model Spring Boot Model
+	 * @return HTML page to render
+	 */
 	@PostMapping(path = "/marketing")
-	public String postBody(@RequestBody final String data, final Model model) throws Exception {
+	public String postBody(@RequestBody final String data, final Model model) {
 		String response = "";
 		Object Find_Ad_Account = null;
 		Object Get_user_org_access = null;
 
 		switch (data) {
-			case "token_introspection=Token+Introspection":
+			case CASE_TOKEN_INTROSPECTION:
 				try {
-					response = lmsTemplate.getForObject(SERVER_URL + "tokenIntrospection", String.class);
+					response = lmsTemplate.getForObject(SERVER_URL + TOKEN_INTROSPECTION_ENDPOINT, String.class);
 				} catch (Exception e) {
-					response = "Error retrieving the data";
+					response = GENERIC_ERROR_MESSAGE;
 				}
 				break;
 
-			case "Find_ad_account=Find+Ad+Accounts":
+			case CASE_FIND_AD_ACCOUNTS:
 				try {
-					response = lmsTemplate.getForObject(SERVER_URL + "findAdAccounts", String.class);
-					if(response.contains("rror")) {
+					response = lmsTemplate.getForObject(SERVER_URL + FIND_AD_ACCOUNTS_ENDPOINT, String.class);
+					if(response.toLowerCase().contains("error")) {
 						response = parseJSON(response).toString();
 					} else {
 						Find_Ad_Account = parseJSON(response);
-						response = "Find Ad Accounts by Authenticated User:- ";
+						response = FIND_AD_ACCOUNTS_MESSAGE;
 					}
 				} catch (Exception e) {
-					response = "Error retrieving the data";
+					response = GENERIC_ERROR_MESSAGE;
 				}
 				break;
 
-			case "Get_user_org_access=Find+Org+Access":
+			case CASE_GET_USER_ORG_ROLES:
 				try {
-					response = lmsTemplate.getForObject(SERVER_URL + "getUserOrgAccess", String.class);
-					if(response.contains("rror")) {
+					response = lmsTemplate.getForObject(SERVER_URL + GET_USER_ORG_ACCESS_ENDPOINT, String.class);
+					if(response.toLowerCase().contains("error")) {
 						response = parseJSON(response).toString();
 					} else {
 						Get_user_org_access = parseJSON(response);
-						response = "Find Ad Account roles of Authenticated User:- ";
+						response = FIND_USER_ROLES_MESSAGE;
 					}
 				} catch (Exception e) {
-					response = "Error retrieving the data";
+					response = GENERIC_ERROR_MESSAGE;
 				}
 				break;
 			default:
-				response = "No API calls made!";
+				response = DEFAULT_MESSAGE;
 		}
 
 		model.addAttribute("output", response);
@@ -98,7 +103,7 @@ public final class LinkedInMarketingController {
 		model.addAttribute("Get_user_org_access", Get_user_org_access);
 		model.addAttribute("auth_url", SERVER_URL + "login");
 		model.addAttribute("action", "Making Server API request...");
-		return "marketingtemplate";
+		return LMS_PAGE;
 	}
 
 	public Object parseJSON(final String response) throws Exception {
