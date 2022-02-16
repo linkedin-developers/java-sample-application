@@ -40,7 +40,7 @@ public final class LinkedInMarketingController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("auth_url", SERVER_URL + "login");
+		model.addAttribute("auth_url", SERVER_URL + THREE_LEGGED_TOKEN_GEN_ENDPOINT);
 		model.addAttribute("output", output);
 		model.addAttribute("action", action);
 		return LMS_PAGE;
