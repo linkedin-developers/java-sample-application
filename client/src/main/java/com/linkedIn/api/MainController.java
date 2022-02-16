@@ -97,7 +97,7 @@ public final class MainController {
         }
 
         model.addAttribute("output", response);
-        model.addAttribute("auth_url", SERVER_URL + "login");
+        model.addAttribute("auth_url", SERVER_URL + THREE_LEGGED_TOKEN_GEN_ENDPOINT);
         model.addAttribute("action", action);
         return OAUTH_PAGE;
     }

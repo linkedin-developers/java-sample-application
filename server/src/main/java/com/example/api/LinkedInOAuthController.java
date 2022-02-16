@@ -42,8 +42,8 @@ public final class LinkedInOAuthController {
     /*
      * Define all inputs in the property file
      */
-    public Properties prop = new Properties();
-    public String propFileName = "config.properties";
+    private Properties prop = new Properties();
+    private String propFileName = "config.properties";
     public static String token = null;
     public String refresh_token = null;
     public LinkedInOAuthService service;

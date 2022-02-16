@@ -101,7 +101,7 @@ public final class LinkedInMarketingController {
 		model.addAttribute("output", response);
 		model.addAttribute("Find_ad_account", Find_Ad_Account);
 		model.addAttribute("Get_user_org_access", Get_user_org_access);
-		model.addAttribute("auth_url", SERVER_URL + "login");
+		model.addAttribute("auth_url", SERVER_URL + THREE_LEGGED_TOKEN_GEN_ENDPOINT);
 		model.addAttribute("action", "Making Server API request...");
 		return LMS_PAGE;
 	}
