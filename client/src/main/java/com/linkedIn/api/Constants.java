@@ -1,5 +1,8 @@
 package com.linkedIn.api;
 
+/**
+ * Constants for use
+ */
 public class Constants {
     public static final String TOKEN_INTROSPECTION_ENDPOINT = "tokenIntrospection";
     public static final String THREE_LEGGED_TOKEN_GEN_ENDPOINT = "login";

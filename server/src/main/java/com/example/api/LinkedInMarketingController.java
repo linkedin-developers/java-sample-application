@@ -1,25 +1,32 @@
-/*
-* Getting Started with LinkedIn's Marketing APIs ,
-* Documentation: https://docs.microsoft.com/en-us/linkedin/marketing/getting-started
-* The additional scopes required to use these functions are:
-* 'rw_ads, rw_organization_admin'
-* You can invoke these functions independently with valid access token string as a parameter.
-* More Docs: https://docs.microsoft.com/en-us/linkedin/marketing/integrations/ads/account-structure/create-and-manage-account-users
-*/
 package com.example.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpStatusCodeException;
+
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static com.example.api.LinkedInOAuthController.token;
 import static com.example.api.Constants.*;
 
+/*
+ * Getting Started with LinkedIn's Marketing APIs ,
+ * Documentation: https://docs.microsoft.com/en-us/linkedin/marketing/getting-started
+ * The additional scopes required to use these functions are:
+ * 'rw_ads, rw_organization_admin'
+ * You can invoke these functions independently with valid access token string as a parameter.
+ * More Docs: https://docs.microsoft.com/en-us/linkedin/marketing/integrations/ads/account-structure/create-and-manage-account-users
+ */
 
 @RestController
 public final class LinkedInMarketingController {
 
     private RestTemplate lmsTemplate = new RestTemplate();
+    private Logger logger = Logger.getLogger(LinkedInMarketingController.class.getName());
+
 
     /**
      * Find Ad Accounts by Authenticated User or Verifying Ad Accounts Access
@@ -29,8 +36,10 @@ public final class LinkedInMarketingController {
     public String Find_ad_account() {
         try {
             String response = lmsTemplate.getForObject(LI_FIND_AD_ACCOUNTS_FOR_USER_ENDPOINT + token, String.class);
+            logger.log(Level.INFO, "Find Ad Accounts for Authenticated User response is:{0}", response);
             return response;
         } catch (HttpStatusCodeException e) {
+            logger.log(Level.SEVERE, e.getMessage(),e);
             return e.getResponseBodyAsString();
         }
 
@@ -44,8 +53,10 @@ public final class LinkedInMarketingController {
     public String Get_user_org_access() {
         try {
             String response = lmsTemplate.getForObject(LI_FIND_USER_ROLES_ENDPOINT + token, String.class);
+            logger.log(Level.INFO, "Find Org Roles for Authenticated User response is:{0}", response);
             return response;
         } catch (HttpStatusCodeException e) {
+            logger.log(Level.SEVERE, e.getMessage(),e);
             return e.getResponseBodyAsString();
         }
 
@@ -55,7 +66,8 @@ public final class LinkedInMarketingController {
      * Fetch Ad Account by ID
      * @return Individual Ad Account Details
      */
-    /* Uncomment to use
+    // uncomment below to use
+    /*
     @RequestMapping(value = "/fetchAdAccount")
     public String Fetch_ad_account(@RequestParam(name = "account", required = false) final String account, final HttpSession session) {
         if (account == null) {

@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.ConsoleHandler;
 import static com.linkedIn.api.Constants.*;
-/*
-* Main controller called by spring-boot to map URL's
+
+/**
+ * Main controller called by spring-boot to handle OAuth actions at
+ * http://localhost:8989 (Default)
  */
 
 @Controller
@@ -23,6 +29,7 @@ public final class MainController {
     }
 
     static final RestTemplate Rest_Template = new RestTemplate();
+    private Logger logger = Logger.getLogger(MainController.class.getName());
 
     @Value("${SERVER_URL}")
 	private String SERVER_URL;
@@ -38,18 +45,22 @@ public final class MainController {
 		String action = "Start with LinkedIn's OAuth API operations...";
 		String response, output = "";
 		try {
-			response = Rest_Template.getForObject(SERVER_URL  + TOKEN_INTROSPECTION_ENDPOINT, String.class);
+            response = Rest_Template.getForObject(SERVER_URL  + TOKEN_INTROSPECTION_ENDPOINT, String.class);
+            logger.log(Level.INFO, "Validating if a token is already in session. Response from token introspection end point is: {0}", response);
+
             if (!response.toLowerCase().contains("error")) {
                 action = output = TOKEN_EXISTS_MESSAGE;
             }
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		model.addAttribute("auth_url", SERVER_URL + THREE_LEGGED_TOKEN_GEN_ENDPOINT);
 		model.addAttribute("output", output);
 		model.addAttribute("action", action);
-		return OAUTH_PAGE;
+
+        logger.log(Level.INFO, "Completed execution for rendering OAuth page. The model values are output: {0},action: {1}.", new String[]{output, action});
+        return OAUTH_PAGE;
 	}
 
     /**
@@ -63,12 +74,16 @@ public final class MainController {
     public String postBody(@RequestBody final String data, final Model model) {
         String response = "";
         String action = "";
+
+        logger.log(Level.INFO, "Handling on click of marketing page bubttons. Button cliked is {0}", data);
+
         if (data.equals(CASE_TWO_LEGGED_TOKEN_GEN)) {
             action = ACTION_2_LEGGED_TOKEN_GEN;
             try {
                 Rest_Template.getForObject(SERVER_URL  + TWO_LEGGED_TOKEN_GEN_ENDPOINT, String.class);
                 response = TWO_LEGGED_TOKEN_GEN_SUCCESS_MESSAGE;
             } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
                 response = GENERIC_ERROR_MESSAGE;
             }
 
@@ -77,6 +92,7 @@ public final class MainController {
             try {
                 response = Rest_Template.getForObject(SERVER_URL + PROFILE_ENDPOINT, String.class);
             } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
                 response = GENERIC_ERROR_MESSAGE;
             }
 
@@ -85,6 +101,7 @@ public final class MainController {
             try {
                 response = Rest_Template.getForObject(SERVER_URL + USE_REFRESH_TOKEN_ENDPOINT, String.class);
             } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
                 response = GENERIC_ERROR_MESSAGE;
             }
         } else {
@@ -92,6 +109,7 @@ public final class MainController {
             try {
             response = Rest_Template.getForObject(SERVER_URL + TOKEN_INTROSPECTION_ENDPOINT, String.class);
             } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
                 response = GENERIC_ERROR_MESSAGE;
             }
         }
@@ -99,6 +117,8 @@ public final class MainController {
         model.addAttribute("output", response);
         model.addAttribute("auth_url", SERVER_URL + THREE_LEGGED_TOKEN_GEN_ENDPOINT);
         model.addAttribute("action", action);
+
+        logger.log(Level.INFO, "Completed execution on button click. The output is {0}", response);
         return OAUTH_PAGE;
     }
 
