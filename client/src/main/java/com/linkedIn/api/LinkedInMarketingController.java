@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import java.util.logging.ConsoleHandler;
 import static com.linkedIn.api.Constants.*;
 
 
@@ -89,7 +88,7 @@ public final class LinkedInMarketingController {
 			case CASE_FIND_AD_ACCOUNTS:
 				try {
 					response = lmsTemplate.getForObject(SERVER_URL + FIND_AD_ACCOUNTS_ENDPOINT, String.class);
-					if(response.toLowerCase().contains("error")) {
+					if (response.toLowerCase().contains("error")) {
 						response = parseJSON(response).toString();
 					} else {
 						Find_Ad_Account = parseJSON(response);
@@ -140,7 +139,7 @@ public final class LinkedInMarketingController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map < String, Object > jsonMap = objectMapper.readValue(response,
 				new TypeReference < Map < String, Object >>() { } );
-		if(jsonMap.containsKey("elements"))
+		if (jsonMap.containsKey("elements"))
 			return jsonMap.get("elements");
 		 else
 		 	return jsonMap.get("message");

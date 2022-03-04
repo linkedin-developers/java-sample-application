@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.ConsoleHandler;
 import static com.linkedIn.api.Constants.*;
 
 /**
