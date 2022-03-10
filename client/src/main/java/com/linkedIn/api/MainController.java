@@ -12,7 +12,22 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static com.linkedIn.api.Constants.*;
+import static com.linkedIn.api.Constants.TOKEN_INTROSPECTION_ENDPOINT;
+import static com.linkedIn.api.Constants.TOKEN_EXISTS_MESSAGE;
+import static com.linkedIn.api.Constants.THREE_LEGGED_TOKEN_GEN_ENDPOINT;
+import static com.linkedIn.api.Constants.OAUTH_PAGE;
+import static com.linkedIn.api.Constants.CASE_TWO_LEGGED_TOKEN_GEN;
+import static com.linkedIn.api.Constants.ACTION_2_LEGGED_TOKEN_GEN;
+import static com.linkedIn.api.Constants.TWO_LEGGED_TOKEN_GEN_ENDPOINT;
+import static com.linkedIn.api.Constants.TWO_LEGGED_TOKEN_GEN_SUCCESS_MESSAGE;
+import static com.linkedIn.api.Constants.GENERIC_ERROR_MESSAGE;
+import static com.linkedIn.api.Constants.CASE_GET_PROFILE;
+import static com.linkedIn.api.Constants.ACTION_GET_PROFILE;
+import static com.linkedIn.api.Constants.PROFILE_ENDPOINT;
+import static com.linkedIn.api.Constants.CASE_USE_REFRESH_TOKEN;
+import static com.linkedIn.api.Constants.ACTION_USE_REFRESH_TOKEN;
+import static com.linkedIn.api.Constants.USE_REFRESH_TOKEN_ENDPOINT;
+import static com.linkedIn.api.Constants.ACTION_TOKEN_INTROSPECTION;
 
 /**
  * Main controller called by spring-boot to handle OAuth actions at
@@ -42,13 +57,15 @@ public final class MainController {
     @GetMapping("/")
 	public String oauth(final Model model) {
 		String action = "Start with LinkedIn's OAuth API operations...";
-		String response, output = "";
+		String response = "";
+        String output = "";
 		try {
             response = Rest_Template.getForObject(SERVER_URL  + TOKEN_INTROSPECTION_ENDPOINT, String.class);
             logger.log(Level.INFO, "Validating if a token is already in session. Response from token introspection end point is: {0}", response);
 
             if (!response.toLowerCase().contains("error")) {
-                action = output = TOKEN_EXISTS_MESSAGE;
+                action = TOKEN_EXISTS_MESSAGE;
+                output = TOKEN_EXISTS_MESSAGE;
             }
 		} catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);

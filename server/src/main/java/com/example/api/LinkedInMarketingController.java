@@ -9,7 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.example.api.LinkedInOAuthController.token;
-import static com.example.api.Constants.*;
+import static com.example.api.Constants.LI_FIND_AD_ACCOUNTS_FOR_USER_ENDPOINT;
+import static com.example.api.Constants.LI_FIND_USER_ROLES_ENDPOINT;
 
 /*
  * Getting Started with LinkedIn's Marketing APIs ,
@@ -38,7 +39,7 @@ public final class LinkedInMarketingController {
             logger.log(Level.INFO, "Find Ad Accounts for Authenticated User response is:{0}", response);
             return response;
         } catch (HttpStatusCodeException e) {
-            logger.log(Level.SEVERE, e.getMessage(),e);
+            logger.log(Level.SEVERE, e.getMessage(), e);
             return e.getResponseBodyAsString();
         }
 
@@ -55,7 +56,7 @@ public final class LinkedInMarketingController {
             logger.log(Level.INFO, "Find Org Roles for Authenticated User response is:{0}", response);
             return response;
         } catch (HttpStatusCodeException e) {
-            logger.log(Level.SEVERE, e.getMessage(),e);
+            logger.log(Level.SEVERE, e.getMessage(), e);
             return e.getResponseBodyAsString();
         }
 

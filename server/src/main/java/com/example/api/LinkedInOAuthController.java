@@ -21,8 +21,10 @@ import com.linkedin.oauth.pojo.AccessToken;
 import com.linkedin.oauth.service.LinkedInOAuthService;
 import org.springframework.web.servlet.view.RedirectView;
 
-import static com.linkedin.oauth.util.Constants.*;
-import static com.example.api.Constants.*;
+import static com.linkedin.oauth.util.Constants.TOKEN_INTROSPECTION_URL;
+import static com.linkedin.oauth.util.Constants.REQUEST_TOKEN_URL;
+import static com.example.api.Constants.TOKEN_INTROSPECTION_ERROR_MESSAGE;
+import static com.example.api.Constants.LI_ME_ENDPOINT;
 
 /*
  * Getting Started with LinkedIn's OAuth APIs ,

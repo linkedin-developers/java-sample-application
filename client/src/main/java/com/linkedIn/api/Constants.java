@@ -21,7 +21,7 @@ public class Constants {
     public static final String ACTION_2_LEGGED_TOKEN_GEN = "Generating 2-legged auth access token...";
     public static final String ACTION_GET_PROFILE = "Getting public profile...";
     public static final String ACTION_USE_REFRESH_TOKEN = "Refreshing token...";
-    public static final String ACTION_TOKEN_INTROSPECTION ="Performing token introspection...";
+    public static final String ACTION_TOKEN_INTROSPECTION = "Performing token introspection...";
     public static final String CASE_TWO_LEGGED_TOKEN_GEN = "two_legged_auth=2+Legged+OAuth";
     public static final String CASE_GET_PROFILE = "profile=Get+Profile";
     public static final String CASE_USE_REFRESH_TOKEN = "refresh_token=Use+Refresh+Token";

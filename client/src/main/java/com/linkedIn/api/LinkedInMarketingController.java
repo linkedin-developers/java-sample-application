@@ -12,8 +12,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import static com.linkedIn.api.Constants.*;
-
+import static com.linkedIn.api.Constants.TOKEN_INTROSPECTION_ENDPOINT;
+import static com.linkedIn.api.Constants.TOKEN_EXISTS_MESSAGE;
+import static com.linkedIn.api.Constants.LMS_PAGE;
+import static com.linkedIn.api.Constants.THREE_LEGGED_TOKEN_GEN_ENDPOINT;
+import static com.linkedIn.api.Constants.CASE_TOKEN_INTROSPECTION;
+import static com.linkedIn.api.Constants.GENERIC_ERROR_MESSAGE;
+import static com.linkedIn.api.Constants.CASE_FIND_AD_ACCOUNTS;
+import static com.linkedIn.api.Constants.FIND_AD_ACCOUNTS_ENDPOINT;
+import static com.linkedIn.api.Constants.FIND_AD_ACCOUNTS_MESSAGE;
+import static com.linkedIn.api.Constants.CASE_GET_USER_ORG_ROLES;
+import static com.linkedIn.api.Constants.GET_USER_ORG_ACCESS_ENDPOINT;
+import static com.linkedIn.api.Constants.DEFAULT_MESSAGE;
+import static com.linkedIn.api.Constants.FIND_USER_ROLES_MESSAGE;
 
 /**
  * LMS controller for handling the actions on the marketing page at
@@ -39,14 +50,16 @@ public final class LinkedInMarketingController {
 	@GetMapping("/marketing")
 	public String oauth(final Model model) {
 		String action = "Start with LinkedIn's LMS APIs!";
-		String response, output = "";
+		String response = "";
+		String output = "";
 		try {
 			response = lmsTemplate.getForObject(SERVER_URL + TOKEN_INTROSPECTION_ENDPOINT, String.class);
 
 			logger.log(Level.INFO, "Validating if a token is already in session. Response from token introspection end point is: {0}", response);
 
 			if (!response.toLowerCase().contains("error")) {
-				action = output = TOKEN_EXISTS_MESSAGE;
+				action = TOKEN_EXISTS_MESSAGE;
+				output = TOKEN_EXISTS_MESSAGE;
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
@@ -103,7 +116,7 @@ public final class LinkedInMarketingController {
 			case CASE_GET_USER_ORG_ROLES:
 				try {
 					response = lmsTemplate.getForObject(SERVER_URL + GET_USER_ORG_ACCESS_ENDPOINT, String.class);
-					if(response.toLowerCase().contains("error")) {
+					if (response.toLowerCase().contains("error")) {
 						response = parseJSON(response).toString();
 					} else {
 						Get_user_org_access = parseJSON(response);
@@ -139,10 +152,11 @@ public final class LinkedInMarketingController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map < String, Object > jsonMap = objectMapper.readValue(response,
 				new TypeReference < Map < String, Object >>() { } );
-		if (jsonMap.containsKey("elements"))
+		if (jsonMap.containsKey("elements")) {
 			return jsonMap.get("elements");
-		 else
-		 	return jsonMap.get("message");
+		} else {
+			return jsonMap.get("message");
+		}
 	}
 
 }
