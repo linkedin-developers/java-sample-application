@@ -1,0 +1,46 @@
+# Workflow setup to test Client and Server components 
+
+name: LinkedIn Java OAuth Sample App Validation
+
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  #workflow_dispatch:
+
+
+jobs:
+  build:
+   
+    runs-on: ubuntu-latest
+    steps:
+    
+      - uses: actions/checkout@v2
+    
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Super-Linter
+        uses: github/super-linter@v4.6.1
+        env: 
+          GITHUB_TOKEN : ${{secrets.GITHUB_TOKEN}}
+          VALIDATE_JAVA : true
+
+      # Runs a spring boot server and test cases
+      - name: Build and Run Tests for client & Server
+        run: |
+          cd client
+          mvn clean install
+          cd ..
+          cd server
+          mvn clean install
+      
+
+          
+

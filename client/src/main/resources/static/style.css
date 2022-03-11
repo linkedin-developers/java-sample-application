@@ -1,0 +1,99 @@
+body {
+  padding: 40px 20px;
+  word-wrap: break-word;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.btn-primary {
+  background: #0a66c2;
+  color: white;
+  padding: 20px;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.btn-link {
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 24px;
+  text-align: center;
+  border-radius: 24px;
+  box-shadow: inset 0 0 0 1px #8f5849;
+  color: #8f5849;
+}
+
+.output {
+  border: 2px solid #8f5849;
+  padding: 10px;
+  max-width: 800px;
+  margin: 10px 10px;
+  min-height: 50px;
+  font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  display: block;
+  margin: 20px 10px;
+}
+
+.header-logo {
+  margin: 0 auto;
+  display: block;
+  height: 200px;
+  width: auto;
+}
+
+h1 {
+  color: #0077B5;
+  text-align: center;
+}
+
+h5 {
+  line-height: 20px;
+  color: #70B5F9;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #f18957;
+  color: white;
+}
+
+.three {
+  padding: 10px 25px;
+  background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
+  color: -internal-light-dark(black, white);
+  border-width: 2px;
+  border-style: outset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+}
