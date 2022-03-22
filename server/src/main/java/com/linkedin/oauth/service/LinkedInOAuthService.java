@@ -75,7 +75,7 @@ public final class LinkedInOAuthService {
         parameters.add(CLIENT_SECRET, this.apiSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
+        headers.set(HttpHeaders.USER_AGENT, USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
 
@@ -95,7 +95,7 @@ public final class LinkedInOAuthService {
         parameters.add(CLIENT_SECRET, this.apiSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
+        headers.set(HttpHeaders.USER_AGENT, USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
     }
@@ -113,7 +113,7 @@ public final class LinkedInOAuthService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
+        headers.set(HttpHeaders.USER_AGENT, USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
     }
@@ -131,7 +131,7 @@ public final class LinkedInOAuthService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
+        headers.set(HttpHeaders.USER_AGENT, USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
     }

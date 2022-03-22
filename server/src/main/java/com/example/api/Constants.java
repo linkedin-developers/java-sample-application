@@ -10,11 +10,11 @@ public class Constants {
     public static final String TOKEN_INTROSPECTION_ERROR_MESSAGE = "Error introspecting token, service is not initiated";
     public static final String SAMPLE_APP_BASE = "java-sample-application";
     public static final String SAMPLE_APP_VERSION = "version 1.0";
-    enum SAMPLE_APP_NAME{
+    enum AppName {
         OAuth,
         Marketing;
     }
-    public static final String USER_AGENT_OAUTH_VALUE = String.format("%s (%s, %s)", SAMPLE_APP_BASE, SAMPLE_APP_VERSION, SAMPLE_APP_NAME.OAuth.name());
-    public static final String USER_AGENT_LMS_VALUE = String.format("%s (%s, %s)", SAMPLE_APP_BASE, SAMPLE_APP_VERSION, SAMPLE_APP_NAME.Marketing.name());
+    public static final String USER_AGENT_OAUTH_VALUE = String.format("%s (%s, %s)", SAMPLE_APP_BASE, SAMPLE_APP_VERSION, AppName.OAuth.name());
+    public static final String USER_AGENT_LMS_VALUE = String.format("%s (%s, %s)", SAMPLE_APP_BASE, SAMPLE_APP_VERSION, AppName.Marketing.name());
 
 }
