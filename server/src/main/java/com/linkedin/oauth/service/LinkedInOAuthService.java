@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import static com.linkedin.oauth.util.Constants.*;
+import static com.example.api.Constants.USER_AGENT_OAUTH_VALUE;
 
 
 /**
@@ -74,6 +75,7 @@ public final class LinkedInOAuthService {
         parameters.add(CLIENT_SECRET, this.apiSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
 
@@ -93,6 +95,7 @@ public final class LinkedInOAuthService {
         parameters.add(CLIENT_SECRET, this.apiSecret);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
     }
@@ -110,6 +113,7 @@ public final class LinkedInOAuthService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
     }
@@ -127,6 +131,7 @@ public final class LinkedInOAuthService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set(HttpHeaders.USER_AGENT,USER_AGENT_OAUTH_VALUE);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
         return request;
     }

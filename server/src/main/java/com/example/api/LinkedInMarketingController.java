@@ -1,9 +1,12 @@
 package com.example.api;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +14,9 @@ import java.util.logging.Logger;
 import static com.example.api.LinkedInOAuthController.token;
 import static com.example.api.Constants.LI_FIND_AD_ACCOUNTS_FOR_USER_ENDPOINT;
 import static com.example.api.Constants.LI_FIND_USER_ROLES_ENDPOINT;
+import static com.example.api.Constants.USER_AGENT_LMS_VALUE;
+
+
 
 /*
  * Getting Started with LinkedIn's Marketing APIs ,
@@ -26,7 +32,7 @@ public final class LinkedInMarketingController {
 
     private RestTemplate lmsTemplate = new RestTemplate();
     private Logger logger = Logger.getLogger(LinkedInMarketingController.class.getName());
-
+    private HttpHeaders header = new HttpHeaders();
 
     /**
      * Find Ad Accounts by Authenticated User or Verifying Ad Accounts Access
@@ -35,7 +41,9 @@ public final class LinkedInMarketingController {
     @RequestMapping("/findAdAccounts")
     public String Find_ad_account() {
         try {
-            String response = lmsTemplate.getForObject(LI_FIND_AD_ACCOUNTS_FOR_USER_ENDPOINT + token, String.class);
+            setUserAgentHeader();
+            String response = lmsTemplate.exchange(LI_FIND_AD_ACCOUNTS_FOR_USER_ENDPOINT + token, HttpMethod.GET,
+                new HttpEntity(header), String.class).getBody();
             logger.log(Level.INFO, "Find Ad Accounts for Authenticated User response is:{0}", response);
             return response;
         } catch (HttpStatusCodeException e) {
@@ -52,7 +60,8 @@ public final class LinkedInMarketingController {
     @RequestMapping("/getUserOrgAccess")
     public String Get_user_org_access() {
         try {
-            String response = lmsTemplate.getForObject(LI_FIND_USER_ROLES_ENDPOINT + token, String.class);
+            setUserAgentHeader();
+            String response = lmsTemplate.exchange(LI_FIND_USER_ROLES_ENDPOINT + token, HttpMethod.GET, new HttpEntity(header), String.class).getBody();
             logger.log(Level.INFO, "Find Org Roles for Authenticated User response is:{0}", response);
             return response;
         } catch (HttpStatusCodeException e) {
@@ -81,5 +90,9 @@ public final class LinkedInMarketingController {
             return e.getResponseBodyAsString();
         }
     }*/
+
+    private void setUserAgentHeader() {
+        header.set(HttpHeaders.USER_AGENT, USER_AGENT_LMS_VALUE);
+    }
 
 }

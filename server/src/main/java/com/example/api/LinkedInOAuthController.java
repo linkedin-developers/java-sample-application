@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +23,11 @@ import com.linkedin.oauth.pojo.AccessToken;
 import com.linkedin.oauth.service.LinkedInOAuthService;
 import org.springframework.web.servlet.view.RedirectView;
 
-import static com.linkedin.oauth.util.Constants.TOKEN_INTROSPECTION_URL;
-import static com.linkedin.oauth.util.Constants.REQUEST_TOKEN_URL;
 import static com.example.api.Constants.TOKEN_INTROSPECTION_ERROR_MESSAGE;
 import static com.example.api.Constants.LI_ME_ENDPOINT;
+import static com.example.api.Constants.USER_AGENT_OAUTH_VALUE;
+import static com.linkedin.oauth.util.Constants.TOKEN_INTROSPECTION_URL;
+import static com.linkedin.oauth.util.Constants.REQUEST_TOKEN_URL;
 
 /*
  * Getting Started with LinkedIn's OAuth APIs ,
@@ -179,7 +182,9 @@ public final class LinkedInOAuthController {
 
     @RequestMapping(value = "/profile")
     public String profile() {
-        return restTemplate.getForObject(LI_ME_ENDPOINT + token, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.USER_AGENT, USER_AGENT_OAUTH_VALUE);
+        return restTemplate.exchange(LI_ME_ENDPOINT + token, HttpMethod.GET, new HttpEntity<>(headers), String.class).getBody();
     }
 
     private void loadProperty() throws IOException {
