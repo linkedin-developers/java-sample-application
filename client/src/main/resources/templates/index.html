@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>OAuth: Sample Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{style.css}">
+</head>
+<body>
+<div class="container">
+    <h1 class="center">OAuth Sample Application</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+            <h3>Client Application</h3>
+            <p>This client application makes calls to the server component REST Endpoints</p>
+            <h6><p th:text="${action}" /></h6>
+                <p>OAuth functions to generate access token in server component</p>
+                <a th:href="${auth_url}" target="_blank" class="btn-link three">3 Legged OAuth</a>
+                <input type="submit" name="two_legged_auth" class="btn-link" value="2 Legged OAuth" />
+                <p>OAuth token calls</p>
+                <input type="submit" name="token_introspection" class="btn-link" value="Token Introspection" />
+                <input type="submit" name="refresh_token" class="btn-link" value="Use Refresh Token" />
+                <p>Use access token stored in server to make REST calls</p>
+                <input type="submit" name="profile" class="btn-link" value="Get Profile" />
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h5>OUTPUT: JSON response from server component</h5>
+            <div class="output" id="output"><p th:text="${output}" /> </div>
+        </div>
+    </div></div>
+</body>
+</html>

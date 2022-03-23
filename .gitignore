@@ -1,0 +1,12 @@
+*.DS_Store
+target/
+bin/
+/.settings
+/.classpath
+/.project
+/.DS_Store
+*.settings/
+*.class
+*.classpath
+*.project
+config.properties
