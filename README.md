@@ -1,5 +1,8 @@
 # Sample Application for LinkedIn APIs
 
+> Please take a 1-minute survey to help us help you, with more Sample Apps for LinkedIn APIs.
+> Go to **www.slido.com** and use the code **SampleApp** to answer the survey
+
 ## Overview
 
 Sample Application is a ready-to-use code example that enables you to try out RESTful calls to LinkedIn's APIs. The application provides scalable and customizable code for your requirements as you begin API development with LinkedIn.
