@@ -29,4 +29,6 @@ public class Constants {
     public static final String CASE_FIND_AD_ACCOUNTS = "Find_ad_account=Find+Ad+Accounts";
     public static final String CASE_GET_USER_ORG_ROLES = "Get_user_org_access=Find+Org+Access";
     public static final String DEFAULT_MESSAGE = "No API calls made!";
+    public static final String REFRESH_TOKEN_ERROR_MESSAGE = "Refresh token is empty! Generate 3L Access token again.";
+    public static final String REFRESH_TOKEN_MESSAGE = "Generated new access token using refresh token.";
 }

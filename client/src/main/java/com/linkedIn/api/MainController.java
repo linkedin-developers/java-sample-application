@@ -28,6 +28,8 @@ import static com.linkedIn.api.Constants.CASE_USE_REFRESH_TOKEN;
 import static com.linkedIn.api.Constants.ACTION_USE_REFRESH_TOKEN;
 import static com.linkedIn.api.Constants.USE_REFRESH_TOKEN_ENDPOINT;
 import static com.linkedIn.api.Constants.ACTION_TOKEN_INTROSPECTION;
+import static com.linkedIn.api.Constants.REFRESH_TOKEN_ERROR_MESSAGE;
+import static com.linkedIn.api.Constants.REFRESH_TOKEN_MESSAGE;
 
 /**
  * Main controller called by spring-boot to handle OAuth actions at
@@ -91,7 +93,7 @@ public final class MainController {
         String response = "";
         String action = "";
 
-        logger.log(Level.INFO, "Handling on click of marketing page bubttons. Button cliked is {0}", data);
+        logger.log(Level.INFO, "Handling on click of marketing page buttons. Button clicked is {0}", data);
 
         if (data.equals(CASE_TWO_LEGGED_TOKEN_GEN)) {
             action = ACTION_2_LEGGED_TOKEN_GEN;
@@ -116,6 +118,10 @@ public final class MainController {
             action = ACTION_USE_REFRESH_TOKEN;
             try {
                 response = Rest_Template.getForObject(SERVER_URL + USE_REFRESH_TOKEN_ENDPOINT, String.class);
+                if(response==null)
+                response = REFRESH_TOKEN_ERROR_MESSAGE;
+                else
+                response = REFRESH_TOKEN_MESSAGE;
             } catch (Exception e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);
                 response = GENERIC_ERROR_MESSAGE;

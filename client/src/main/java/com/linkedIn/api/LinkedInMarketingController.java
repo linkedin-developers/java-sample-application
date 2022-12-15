@@ -86,7 +86,7 @@ public final class LinkedInMarketingController {
 		Object Find_Ad_Account = null;
 		Object Get_user_org_access = null;
 
-		logger.log(Level.INFO, "Handling on click of marketing page bubttons. Button cliked is {0}", data);
+		logger.log(Level.INFO, "Handling on click of marketing page buttons. Button clicked is {0}", data);
 
 		switch (data) {
 			case CASE_TOKEN_INTROSPECTION:
