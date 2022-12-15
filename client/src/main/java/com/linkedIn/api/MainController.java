@@ -118,14 +118,10 @@ public final class MainController {
             action = ACTION_USE_REFRESH_TOKEN;
             try {
                 response = Rest_Template.getForObject(SERVER_URL + USE_REFRESH_TOKEN_ENDPOINT, String.class);
-                if (response == null)
-                {
-                response = REFRESH_TOKEN_ERROR_MESSAGE;
-                }
-                else
-                {
-                response = REFRESH_TOKEN_MESSAGE;
-                }
+                if (response == null) {
+                response = REFRESH_TOKEN_ERROR_MESSAGE; }
+                else {
+                response = REFRESH_TOKEN_MESSAGE; }
             } catch (Exception e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);
                 response = GENERIC_ERROR_MESSAGE;
