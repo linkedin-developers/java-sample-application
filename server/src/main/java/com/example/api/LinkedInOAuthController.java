@@ -174,8 +174,7 @@ public final class LinkedInOAuthController {
         response = restTemplate.postForObject(REQUEST_TOKEN_URL, request, String.class);
         logger.log(Level.INFO, "Used Refresh Token to generate a new access token successfully.");
         return response;
-        }
-        else {
+        } else {
         logger.log(Level.INFO, "Refresh Token cannot be empty. Generate 3L Access Token and Retry again.");
         return response;
         }

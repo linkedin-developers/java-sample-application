@@ -120,8 +120,7 @@ public final class MainController {
                 response = Rest_Template.getForObject(SERVER_URL + USE_REFRESH_TOKEN_ENDPOINT, String.class);
                 if (response == null) {
                 response = REFRESH_TOKEN_ERROR_MESSAGE;
-                }
-                else {
+                } else {
                 response = REFRESH_TOKEN_MESSAGE;
                 }
             } catch (Exception e) {
